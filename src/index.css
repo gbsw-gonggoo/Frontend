@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+#root {
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.hover-group:hover .hover-text {
+  opacity: 1;
+}
+
+.hover-group {
+  width: 100%;
+  min-height: 80px;
+  position: relative;
+}
+
+.hover-img {
+  z-index: 5;
+}
+
+.hover-group:hover .hover-img {
+  opacity: 0.3;
+}
+
+/* .hover-img {
+  margin: 100px;
+} */
+
+
+.hover-text {
+  position: absolute;
+  /* top: 100%; */
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  z-index: 10;
+}
