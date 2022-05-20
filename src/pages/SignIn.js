@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
   return (
-    <div className="flex h-full justify-center bg-slate-100">
+    <div className="flex h-full fixed w-full top-0 justify-center bg-slate-50">
       <div className="min-h-full flex items-center py-12 px-4 sm:px-6 lg:px-8 lg:w-4/12">
         <div className="w-full space-y-8 border p-16 lg:p-20 rounded-lg drop-shadow-2xl bg-white">
           <div>
@@ -59,14 +60,14 @@ const SignIn = () => {
 
             <div className="text-center">
               <div className="text-sm mb-1">
-                <a href="#" className="font-normal text-slate-400 hover:text-slate-600">
+                <Link to='findpw' className="font-normal text-slate-400 hover:text-slate-600">
                   비밀번호를 잊으셨나요?
-                </a>
+                </Link>
               </div>
               <div className="text-sm">
-                <a href="#" className="font-normal text-slate-400 hover:text-slate-600">
+                <Link to='/signup' className="font-normal text-slate-400 hover:text-slate-600">
                   회원가입하기
-                </a>
+                </Link>
               </div>
             </div>
           </form>
