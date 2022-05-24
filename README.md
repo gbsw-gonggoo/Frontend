@@ -44,3 +44,12 @@
 ![상세 페이지2](https://user-images.githubusercontent.com/78010461/170097851-3496e0e3-19c2-499b-946f-9d34c4e1b74f.png)
 ---
 
+### 공동구매 게시
+1. 공구 이미지 업로드
+2. 물품명
+3. 상세내용
+4. 공구할 수량
+5. 마감 기한
+6. 상세 링크
+
+![공동구매 게시](https://user-images.githubusercontent.com/78010461/170098582-9425c789-cf5c-4494-b357-8560e1eeb2fa.png)
