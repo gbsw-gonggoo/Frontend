@@ -80,6 +80,22 @@ const applyuser = [
     {
       name: '김동혁',
       count: 1,
+    },
+    {
+      name: '김강현',
+      count: 2,
+    },
+    {
+      name: '김동혁',
+      count: 1,
+    },
+    {
+      name: '김강현',
+      count: 2,
+    },
+    {
+      name: '김동혁',
+      count: 1,
     }
 ]
 
@@ -98,7 +114,7 @@ const ProductOverview = () => {
     }
   }
   return (
-    <div className="bg-white pt-4">
+    <div className="bg-white pt-4 h-full overflow-y-scroll lg:overflow-auto">
       <nav aria-label="Breadcrumb">
         <ol role="list" className="max-w-2xl mx-auto px-4 flex items-center space-x-2 lg:max-w-7xl lg:px-16">
           <li>
@@ -126,7 +142,7 @@ const ProductOverview = () => {
           </li>
         </ol>
       </nav>
-      <div className="mt-1 pt-2 max-w-2xl mx-auto sm:px-6 lg:mt-20 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md">
+      <div className="h-full lg:h-auto mt-1 pt-2 max-w-2xl mx-auto sm:px-6 lg:mt-20 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md overflow-y-scroll lg:overflow-auto">
         {/* Image gallery */}
           <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border overflow-hidden h-96 lg:h-[34rem] " + (product.user.name===user.name?"lg:col-span-4" : "lg:col-span-6")}>
             <img
@@ -137,7 +153,7 @@ const ProductOverview = () => {
           </div>
 
         {/* Product info */}
-        <div className={"flex flex-col justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.user.name===user.name?"lg:col-span-4" : "lg:col-span-5")}>
+        <div className={"h-[30rem] lg:h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.user.name===user.name?"lg:col-span-4" : "lg:col-span-5")}>
           <div className="pl-1">
             <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">{product.name}</h1>
           </div>
@@ -169,28 +185,30 @@ const ProductOverview = () => {
               </div>
               <form className="algin-bottom">
                 <div className="lg:py-2 py-6 ml-3 float-left">
-                  <input className="border p-1 mr-2 w-20 rounded" min="1" type="number" value={value} onChange={onChange} />개
+                  <input className="border p-1 mr-2 w-20 rounded" min="1" type="number" value={value} onChange={onChange} disabled={user.value ? true : false} />개
                 </div>
                 <button
                   type="submit"
                   onClick={onClick}
                   className={"w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center " + 
-                  "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 float-right mb-6 lg:m-0 "
+                  "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none float-right mb-6 lg:m-0 "
                   + (product.user.name===user.name?"lg:w-36" : "lg:w-48")}>
                   {user.value?"취소하기":"신청하기"}
                 </button>
               </form>
             </div>
           </div>
+          <span className="ml-3 mt-3 text-sm opacity-50">※추가 구매를 원할 경우 취소후 재신청 해주세요</span>
         </div>
         {product.user.name===user.name ? (
-          <div className={"pr-3 flex flex-col items-center w-full h-96 lg:h-[34rem] " + (product.user.name===user.name?"lg:col-span-3":"hidden")}>
-          <div className="flex justify-center mt-10 mb-3">
+          <div className={"h-[29rem] pr-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.user.name===user.name?"lg:col-span-3":"hidden")}>
+          <div className="flex justify-center mt-5 mb-3 h-10 lg:h-8">
             <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
           </div>
-          <div className="overflow-y-scroll flex flex-col items-center w-full h-full">
+          <div className="h-[15rem] lg:h-[27rem] overflow-y-scroll  w-full">
+          <div className="flex flex-col items-center">
             {applyuser.map((user, i) => (
-              <div key={i} className="p-2 border-b flex">
+              <div key={i} className="p-2 border-b flex h-auto ">
                 <div className="pr-2">
                   {i+1}.
                 </div>
@@ -203,7 +221,8 @@ const ProductOverview = () => {
               </div>
             ))}
           </div>
-          <div className="self-end my-5 mr-10 py-2 border-b">
+          </div>
+          <div className="self-end my-3 mr-10 py-2 border-b">
             총: {product.count}개
           </div>
         </div>
