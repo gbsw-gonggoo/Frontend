@@ -9,8 +9,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const navigation = [
   { name: "home", icon: faHouse, to: '/', current: true },
-  { name: "post", icon: faPlus, to: '/signin', current: true },
+  { name: "post", icon: faPlus, to: '/post', current: true },
 ]
+
+const user = {
+  name: 'asdf',
+}
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -47,7 +51,7 @@ const Navbar = () => {
               <div className="hidden sm:block items-center pr-2">
                 <div className="flex space-x-4">
                   <Link
-                    to='/signin'
+                    to='/post'
                     className={classNames(
                       false ? 'text-gray-700' : 'text-gray-400 hover:text-gray-700',
                       'px-3 py-2 text-md font-semibold'
@@ -60,48 +64,61 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
-                <Menu as="div" className="ml-3 relative">
+                {user.name?(
+                  <Menu as="div" className="ml-3 relative">
+                    <div>
+                      <Menu.Button className="overflow-hidden rounded-full flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none ">
+                        <img
+                          className=""
+                          src={`${process.env.PUBLIC_URL}/user/무서운이야기1.jpg`}
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="z-50 lg:overflow-auto origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/mypage"
+                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            >
+                              Your Profile
+                            </Link>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Link
+                              to="/login"
+                              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                            >
+                              Sign out
+                            </Link>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                ):(
                   <div>
-                    <Menu.Button className="overflow-hidden rounded-full flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none ">
-                      <img
-                        className=""
-                        src={`${process.env.PUBLIC_URL}/user/무서운이야기1.jpg`}
-                      />
-                    </Menu.Button>
+                    <Link
+                    to='/signin'
+                    className={classNames(
+                      false ? 'text-gray-700' : 'text-gray-400 hover:text-gray-700',
+                      'px-3 py-2 text-md font-semibold'
+                    )}>
+                      로그인
+                    </Link>
                   </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/mypage"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="/"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                )}
               </div>
             </div>
           </div>
@@ -119,7 +136,7 @@ const Navbar = () => {
                 HOME
             </Link>
             <Link
-                to="/signin"
+                to="/post"
                 className={classNames(
                   true ? 'text-gray-700' : 'text-gray-300 hover:bg-gray-300 hover:text-gray-700',
                   'block px-3 py-2 rounded-md text-base font-medium'
