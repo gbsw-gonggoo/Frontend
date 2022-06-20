@@ -31,74 +31,74 @@ const products = [
   },
   {
     id: 3,
-    name: "칠성사이다, 30개입, 210ml",
+    name: "스키니피그 쿠키앤크림, 1개입, 474ml",
     image: {
-      src: '/product/칠성사이다.png',
+      src: '/product/아이스크림.jpg',
     },
-    price: '15,720',
-    pricePerPiece: '524',
+    price: '7,870',
+    pricePerPiece: '7,870',
     applicants: '4',
-    recruitment: '30',
+    recruitment: '1',
     date: '2022-04-30',
   },
   {
     id: 4,
-    name: "칠성사이다, 30개입, 210ml",
+    name: "블락 바디트리머 네로 블랙, 1개입",
     image: {
-      src: '/product/칠성사이다.png',
+      src: '/product/다리털숱제거기.jpg',
     },
-    price: '15,720',
-    pricePerPiece: '524',
+    price: '8,900',
+    pricePerPiece: '8,900',
     applicants: '4',
-    recruitment: '30',
+    recruitment: '1',
     date: '2022-04-30',
   },
   {
     id: 5,
-    name: "칠성사이다, 30개입, 210ml",
+    name: "롯데제과 비타C박스, 12개입, 65g",
     image: {
-      src: '/product/칠성사이다.png',
+      src: '/product/비타C박스.jpg',
     },
-    price: '15,720',
-    pricePerPiece: '524',
+    price: '17,400',
+    pricePerPiece: '1,450',
     applicants: '4',
-    recruitment: '30',
+    recruitment: '12',
     date: '2022-04-30',
   },
   {
     id: 6,
-    name: "칠성사이다, 30개입, 210ml",
+    name: "토레타, 15개입, 500ml",
     image: {
-      src: '/product/칠성사이다.png',
+      src: '/product/수분충전에는토레타.jpg',
     },
-    price: '15,720',
-    pricePerPiece: '524',
+    price: '15,800',
+    pricePerPiece: '1,053',
     applicants: '4',
-    recruitment: '30',
+    recruitment: '15',
     date: '2022-04-30',
   },
   {
     id: 7,
-    name: "칠성사이다, 30개입, 210ml",
+    name: "포카리스웨트, 20개입, 500ml",
     image: {
-      src: '/product/칠성사이다.png',
+      src: '/product/토레타가없으면포카리스웨트.jpg',
     },
-    price: '15,720',
-    pricePerPiece: '524',
+    price: '22,140',
+    pricePerPiece: '1,107',
     applicants: '4',
-    recruitment: '30',
+    recruitment: '20',
     date: '2022-04-30',
   },
   {
     id: 8,
-    name: "칠성사이다, 30개입, 210ml",
+    name: "우리둘 커플문답 오리지널, 2개입",
     image: {
-      src: '/product/칠성사이다.png',
+      src: '/product/커플문답.jpg',
     },
-    price: '15,720',
-    pricePerPiece: '524',
-    applicants: '4',
-    recruitment: '30',
+    price: '11,150',
+    pricePerPiece: '5,575',
+    applicants: '2',
+    recruitment: '2',
     date: '2022-04-30',
   },
   {
@@ -145,7 +145,7 @@ const ProductList = () => {
     window.scrollTo({top:0, behavior:'smooth'});
   }
   return (
-    <div className="bg-slate-50 overflow-y-auto">
+    <div className="bg-slate-50 overflow-y-auto max-h-screen pb-20">
       <div className="max-w-2xl mx-auto px-4 pb-10 pt-8 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="lg:text-[1.35rem] text-xl font-semibold tracking-tight text-gray-500">공동구매 리스트</h2>
 
