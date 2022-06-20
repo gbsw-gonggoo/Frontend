@@ -10,8 +10,8 @@ const SignUp = () => {
   }
   return (
     <div className="flex h-full fixed w-full top-0 justify-center bg-slate-50">
-      <div className="min-h-full flex items-center py-12 px-4 sm:px-6 lg:px-8 lg:w-4/12">
-        <div className="w-full space-y-8 border p-16 lg:p-20 rounded-lg drop-shadow-2xl bg-white">
+      <div className="min-h-full flex w-full items-center py-12 px-4 sm:px-6 lg:px-8 lg:w-4/12">
+        <div className="w-full space-y-8 border p-12 lg:p-20 rounded-lg drop-shadow-2xl bg-white">
           <div>
             <h2 className="mt-6  text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
             <p className="mt-2 text-center text-sm font-normal text-slate-400">
@@ -23,7 +23,7 @@ const SignUp = () => {
             <div className="rounded-md shadow-sm">
               <div className="mb-1">
                 <label htmlFor="id" className="sr-only">
-                  ID
+                  아이디
                 </label>
                 <input
                   id="id"
@@ -32,12 +32,12 @@ const SignUp = () => {
                   autoComplete="userid"
                   required={required}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="ID"
+                  placeholder="아이디"
                 />
               </div>
               <div className="mb-1">
                 <label htmlFor="password" className="sr-only">
-                  Password
+                  비밀번호
                 </label>
                 <input
                   id="password"
@@ -46,12 +46,12 @@ const SignUp = () => {
                   autoComplete="current-password"
                   required={required}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
+                  placeholder="비밀번호"
                 />
               </div>
               <div className="mb-1">
                 <label htmlFor="passwordConfirm" className="sr-only">
-                  PasswordConfirm
+                  비밀번호 확인
                 </label>
                 <input
                   id="passwordConfirm"
@@ -60,12 +60,12 @@ const SignUp = () => {
                   autoComplete="current-passwordConfirm"
                   required={required}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password Confirm"
+                  placeholder="비밀번호 확인"
                 />
               </div>
               <div className="mb-1 ">
                 <label htmlFor="name" className="sr-only">
-                  Name
+                  이름
                 </label>
                 <input
                   id="name"
@@ -74,12 +74,12 @@ const SignUp = () => {
                   autoComplete="current-name"
                   required={required}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Name"
+                  placeholder="이름"
                 />
               </div>
               <div className="mb-1 ">
                 <label htmlFor="email" className="sr-only">
-                  Email
+                  이메일
                 </label>
                 <input
                   id="email"
@@ -88,7 +88,7 @@ const SignUp = () => {
                   autoComplete="current-email"
                   required={required}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email"
+                  placeholder="이메일"
                 />
               </div>
             </div>
