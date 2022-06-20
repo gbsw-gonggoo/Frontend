@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+## 프론트엔드
+### 회원가입
+1. 아이디
+2. 비밀번호
+3. 이름
+4. 이메일
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![회원가입](https://user-images.githubusercontent.com/78010461/170096957-85b60abb-6a96-45b8-9eff-ccb7215b6b63.png)
+---
 
-## Available Scripts
+### 로그인
+1. 아이디
+2. 비밀번호
 
-In the project directory, you can run:
+![로그인](https://user-images.githubusercontent.com/78010461/170097007-edadefb2-fd2f-4582-b015-c0ca611a7600.png)
+---
 
-### `npm start`
+### 메인페이지
+- 공동구매 품목 리스트
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![메인페이지](https://user-images.githubusercontent.com/78010461/170096062-d12a7125-8b18-4a13-8107-fdb236775eac.png)
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 상세페이지
 
-### `npm test`
+1. 품목명 및 개수
+2. 가격, 개당 가격
+3. 공구 게시자
+4. 공구 마감시간
+5. 공구 신청하기
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![상세 페이지1](https://user-images.githubusercontent.com/78010461/170097776-aa3b4351-b57b-4633-8449-3f4aae461be2.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 상세페이지 (본인이 작성자일때 보이는 화면)
+![상세 페이지2](https://user-images.githubusercontent.com/78010461/170097851-3496e0e3-19c2-499b-946f-9d34c4e1b74f.png)
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 공동구매 게시
+1. 공구 이미지 업로드
+2. 물품명
+3. 상세내용
+4. 공구할 수량
+5. 마감 기한
+6. 상세 링크
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![공동구매 게시](https://user-images.githubusercontent.com/78010461/170098582-9425c789-cf5c-4494-b357-8560e1eeb2fa.png)
