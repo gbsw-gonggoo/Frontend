@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const SignIn = () => {
   return (
     <div className="flex h-full fixed w-full top-0 justify-center bg-slate-50">
-      <div className="min-h-full flex items-center py-12 px-4 sm:px-6 lg:px-8 lg:w-4/12">
-        <div className="w-full space-y-8 border p-16 lg:p-20 rounded-lg drop-shadow-2xl bg-white">
+      <div className="min-h-full flex items-center w-full py-12 px-4 sm:px-6 lg:px-8 lg:w-4/12">
+        <div className="w-full space-y-8 border p-12 lg:p-20 rounded-lg drop-shadow-2xl bg-white">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">로그인</h2>
             <p className="mt-2 text-center text-sm font-normal text-slate-400">
@@ -17,7 +17,7 @@ const SignIn = () => {
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mb-1">
                 <label htmlFor="id" className="sr-only">
-                  ID
+                아이디
                 </label>
                 <input
                   id="id"
@@ -26,12 +26,12 @@ const SignIn = () => {
                   autoComplete="username"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="ID"
+                  placeholder="아이디"
                 />
               </div>
               <div className="rounded-md">
                 <label htmlFor="password" className="sr-only">
-                  Password
+                비밀번호
                 </label>
                 <input
                   id="password"
@@ -40,7 +40,7 @@ const SignIn = () => {
                   autoComplete="current-password"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
+                  placeholder="비밀번호"
                 />
               </div>
             </div>
@@ -54,13 +54,14 @@ const SignIn = () => {
               </button>
             </div>
 
-            <div className="flex items-center justify-between">
-              
-            </div>
-
             <div className="text-center">
               <div className="text-sm mb-1">
-                <Link to='findpw' className="font-normal text-slate-400 hover:text-slate-600">
+                <Link to='/findid' className="font-normal text-slate-400 hover:text-slate-600">
+                  아이디를 잊으셨나요?
+                </Link>
+              </div>
+              <div className="text-sm mb-1">
+                <Link to='/findpw' className="font-normal text-slate-400 hover:text-slate-600">
                   비밀번호를 잊으셨나요?
                 </Link>
               </div>
