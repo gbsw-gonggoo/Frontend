@@ -1,7 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import axios from "axios";
 
 const SignIn = () => {
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(nickname);
+    console.log(password);
+
+    let body = {
+      nickname: nickname,
+      password: password,
+    };
+
+    axios
+      .post("http://172.16.1.42:8002/auth/login", body)
+      .then((res) => {
+        if (res.data.success) {
+          window.location.href = "http://localhost:3002/";
+          // console.log(res);
+        }
+      });
+  };
+  
   return (
     <div className="flex h-full fixed w-full top-0 justify-center bg-slate-50">
       <div className="min-h-full flex items-center w-full py-12 px-4 sm:px-6 lg:px-8 lg:w-4/12">
@@ -12,7 +36,7 @@ const SignIn = () => {
               로그인을 하신 후 이용 가능합니다.
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form onSubmit={submitHandler} className="mt-8 space-y-6" action="#" method="POST">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div className="mb-1">
@@ -25,6 +49,8 @@ const SignIn = () => {
                   type="text"
                   autoComplete="username"
                   required
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value)}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="아이디"
                 />
@@ -39,6 +65,8 @@ const SignIn = () => {
                   type="password"
                   autoComplete="current-password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="비밀번호"
                 />

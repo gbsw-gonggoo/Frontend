@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { faHouse, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {img1} from '../../public/logo.icon';
+import axios from "axios";
 
 const navigation = [
   { name: "home", icon: faHouse, to: '/', current: true },
@@ -13,7 +12,8 @@ const navigation = [
 ]
 
 const user = {
-  name: 'asdf',
+  name: '1',
+  img: '/무서운이야기1.jpg'
 }
 
 function classNames(...classes) {
@@ -22,6 +22,13 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  
+  async function Logout() {
+    const response = await axios.get("http://172.16.1.42:8002/auth/logout")
+    console.log(response)
+    window.location.href = "http://localhost:3002/";
+  }
+  
   return (
     <>
       <Disclosure as="nav" className="z-50 sticky top-0 w-full border-b bg-white">
@@ -38,7 +45,6 @@ const Navbar = () => {
               </Disclosure.Button>
             </div>
             
-            {/* <div className="flex items-center sm:items-stretch sm:justify-start "> */}
             <div className="flex items-center ">
               <Link to='/'>
                 <img
@@ -55,11 +61,8 @@ const Navbar = () => {
                     className={classNames(
                       false ? 'text-gray-700' : 'text-gray-400 hover:text-gray-700',
                       'px-3 py-2 text-md font-semibold'
-                    )}
-                    // aria-current={true ? 'page' : undefined}
-                  >
-                    {/* <FontAwesomeIcon icon={faPlus} size="lg" /> */}
-                    POST
+                    )}>
+                    올리기
                   </Link>
                 </div>
               </div>
@@ -70,7 +73,7 @@ const Navbar = () => {
                       <Menu.Button className="overflow-hidden rounded-full flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none ">
                         <img
                           className=""
-                          src={`${process.env.PUBLIC_URL}/user/무서운이야기1.jpg`}
+                          src={`${process.env.PUBLIC_URL}/user${user.img}`}
                         />
                       </Menu.Button>
                     </div>
@@ -90,18 +93,18 @@ const Navbar = () => {
                               to="/mypage"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
-                              Your Profile
+                              프로필
                             </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <Link
-                              to="/login"
+                            <p
+                              onClick={Logout}
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
-                              Sign out
-                            </Link>
+                              로그아웃
+                            </p>
                           )}
                         </Menu.Item>
                       </Menu.Items>
@@ -133,7 +136,7 @@ const Navbar = () => {
                 )}
                 aria-current={true? 'page' : undefined}
               >
-                HOME
+                홈
             </Link>
             <Link
                 to="/post"
@@ -143,7 +146,7 @@ const Navbar = () => {
                 )}
                 aria-current={true? 'page' : undefined}
               >
-                POST
+                올리기
             </Link>
           </div>
         </Disclosure.Panel>

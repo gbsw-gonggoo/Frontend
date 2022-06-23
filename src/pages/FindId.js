@@ -1,13 +1,37 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const FindId = () => {
   const [required, setRequired] = useState(true);
+  const [email, setEmail] = useState('')
   const navigation = useNavigate();
   function goBack ()  {
     navigation(-1);
     setRequired(true);
   }
+  function emailAuth(e) {
+    e.preventDefault();
+    console.log(email);
+
+    let body = {
+      email: email,
+    };
+
+    // axios
+    //   .post("http://172.16.1.42:3508/login", body)
+    //   .then((res) => console.log(res));
+  
+    loadData();
+  }
+
+  async function loadData() {
+    // const response = await fetch('http://172.16.1.42:3508/login');
+    // const data = await response.json();
+    // console.log(data); 
+  }
+
+
   return (
     <div className="flex h-full fixed w-full top-0 justify-center bg-slate-50">
       <div className="min-h-full flex items-center py-12 px-4 w-full sm:px-6 lg:px-8 lg:w-4/12">
@@ -45,10 +69,12 @@ const FindId = () => {
                   type="email"
                   autoComplete="current-email"
                   required={required}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="이메일"
                 />
-                <button className="group relative w-3/12 mx-1 flex justify-center py-2 px-1 border border-transparent text-sm font-medium rounded-md text-indigo-600 border-indigo-600 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={emailAuth} className="group relative w-3/12 mx-1 flex justify-center py-2 px-1 border border-transparent text-sm font-medium rounded-md text-indigo-600 border-indigo-600 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   인증</button>
               </div>
               <div className="mb-1">
