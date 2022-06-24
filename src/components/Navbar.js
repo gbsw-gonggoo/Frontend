@@ -24,16 +24,16 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   
   async function Logout() {
-    const response = await axios.get("http://172.16.1.42:8002/auth/logout")
-    console.log(response)
-    window.location.href = "http://localhost:3002/";
+    // const response = await axios.get("http://172.16.1.42:8002/auth/logout", { withCredentials = true })
+    // console.log(response)
+    window.location.href = "/";
   }
   
   return (
     <>
       <Disclosure as="nav" className="z-50 sticky top-0 w-full border-b bg-white">
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="relative flex items-center justify-between h-16">
+          <div className="sticky flex items-center justify-between h-16">
             <div className="inset-y-0 left-0 flex items-center sm:hidden">
               {/* Mobile menu button*/}
               <Disclosure.Button className={"inline-flex items-center justify-center p-2 rounded-md focus:outline-none " + (isOpen ? "text-gray-800" : "text-gray-400")}>

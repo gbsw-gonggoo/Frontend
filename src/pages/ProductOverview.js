@@ -1,8 +1,9 @@
 // import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
+import { ChevronLeftIcon } from '@heroicons/react/outline';
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom';
 
-const product = {
+const products = {
   id: 1,
   name: '칠성사이다',
   image: {
@@ -23,26 +24,32 @@ const product = {
   },
   user : [
     {
+      userclass: 1234,
       name: '김성현',
       count: 3,
     },
     {
+      userclass: 1234,
       name: '김강현',
       count: 1,
     },
     {
+      userclass: 1234,
       name: '김동혁',
       count: 1,
     },
     {
+      userclass: 1234,
       name: '조수빈',
       count: 4,
     },
     {
+      userclass: 1234,
       name: '박민혁',
       count: 2,
     },
     {
+      userclass: 1234,
       name: '김성희',
       count: 1,
     },
@@ -55,41 +62,24 @@ const user1 = '김성현';
 
 const ProductOverview = ({ match }) => {
   const location = useLocation();
-  // console.log(location.state);
-  const [product, setProduct] = useState({
-    id: 0,
-    name: '',
-    image: {},
-    amount: '',
-    price: '',
-    text: '',
-    targetCount: 0,
-    count: 0,
-    maxCount: 0,
-    date: '',
-    link: '',
-    value: 0,
-    author: {},
-    user : [{},]
-  })
+  const [product, setProduct] = useState({})
+  const [value, setValue] = useState(product?.value?product.value:1)
   const {id} = useParams();
-  console.log(id);
-
-  async function loadData() {
-    const response = await fetch(`http://172.16.1.42:8002/product/${id}`);
-    const data = await response.json();
-    console.log(data); 
-    
-    if(data.success) setProduct(data.product);
-    else window.location.href = "http://localhost:3002/";
-    console.log(product);
-  }
 
   useEffect(() => {
     loadData();
   },[]);
 
-  const [value, setValue] = useState(product.value?product.value:1)
+  async function loadData() {
+    const data = await fetch(`http://172.16.1.42:8002/product/${id}`)
+      .then((res) => res.json())
+      .catch(() => ({ success: false }))
+    // console.log(data)
+    // const data = {success: false};
+    if(data.success) setProduct({...data.product});
+    else setProduct({...products});
+    //window.location.href = "http://localhost:3002/";
+  }
 
   const onChange = e => {
     setValue(e.target.value);
@@ -106,10 +96,18 @@ const ProductOverview = ({ match }) => {
     loadData();
   }
 
-  
+  if (!Object.keys(product).length) {
+    return (
+      <div className="bg-white w-full h-full fixed top-0 flex justify-center items-center">
+        <div class="loadingio-spinner-rolling-nujnwn5po0q">
+          <div class="ldio-6wvhm66o7gx"><div /></div>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="bg-white pt-4 h-full overflow-y-scroll lg:overflow-auto">
+    <div className="bg-white pt-4 h-full overflow-auto">
       <nav aria-label="Breadcrumb" className="overflow-hidden">
         <ol role="list" className="max-w-2xl mx-auto px-4 flex items-center space-x-2 lg:max-w-7xl lg:px-16">
           <li>

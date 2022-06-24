@@ -17,11 +17,11 @@ const SignIn = () => {
     };
 
     axios
-      .post("http://172.16.1.42:8002/auth/login", body)
+      .post("http://172.16.1.42:8002/auth/login", body, { withCredentials: true })
       .then((res) => {
         if (res.data.success) {
-          window.location.href = "http://localhost:3002/";
-          // console.log(res);
+          window.location.href = "/";
+          console.log(res);
         }
       });
   };
