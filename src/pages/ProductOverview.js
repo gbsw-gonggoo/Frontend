@@ -135,7 +135,7 @@ const ProductOverview = ({ match }) => {
           </li>
         </ol>
       </nav>
-      <div className="lg:h-auto mt-1 pt-2 max-w-2xl mx-auto sm:px-6 lg:mt-20 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
+      <div className="lg:h-auto mt-1 pt-2 max-w-2xl mx-auto sm:px-6 lg:mt-10 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
         {/* Image gallery */}
           <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-6")}>
             <img

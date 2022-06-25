@@ -435,7 +435,7 @@ function MyPage() {
 
   return (
     <div className="w-full h-full overflow-auto bg-slate-50">
-      <div className="w-full h-full mx-auto flex flex-col items-center lg:max-w-7xl lg:px-16 relative sm:overflow-inherit">
+      <div className="w-full h-full mx-auto flex flex-col items-center lg:max-w-7xl lg:px-16 relative">
         <div className="mt-5 lg:mt-0 lg:absolute lg:top-10 w-full h-60 rounded-2xl">
           <img
             id="profile-bg-img"
@@ -458,7 +458,7 @@ function MyPage() {
             />
           </div>
         </div>
-        <div className="absolute w-full lg:h-full mt-28 lg:mt-0 lg:top-36 lg:w-11/12 lg:overflow-hidden drop-shadow-2xl bg-white border lg:rounded-lg sm:rounded-lg z-30">
+        <div className="absolute flex flex-col w-full h-auto mt-28 lg:mt-0 lg:top-36 lg:w-11/12 drop-shadow-2xl bg-white border lg:rounded-lg sm:rounded-lg z-30">
           <div className="h-full flex lg:mt-8 mt-5 lg:max-h-[24rem] justify-between flex-col lg:flex-row lg:px-8 px-4 w-auto">
             <div className="justify-between lg:w-1/2 mx-7 mt-7">
               <div className="flex items-center mb-10 justify-between ">
@@ -542,9 +542,9 @@ function MyPage() {
               </div>
             </div>
           </div>
-          <div className="lg:px-8 px-4 lg:mt-5">
-            <div className="w-full">
-              <div className="font-semibold mb-2 mt-10 lg:mt-0">내가 올린 게시물</div>
+          <div className="lg:px-8 px-4 lg:mt-5 mb-5 h-auto">
+            <div className="w-full h-full mb-5">
+              <div className="font-semibold mb-2 mt-10 lg:mt-5">내가 올린 게시물</div>
               <div className="flex flex-col lg:flex-row justify-between">
                 {!products1?
                   <div>
