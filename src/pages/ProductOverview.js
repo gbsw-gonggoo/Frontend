@@ -107,8 +107,8 @@ const ProductOverview = ({ match }) => {
   }
 
   return (
-    <div className="bg-white pt-4 h-full overflow-auto">
-      <nav aria-label="Breadcrumb" className="overflow-hidden">
+    <div className="bg-white pt-4 h-full overflow-auto flex flex-col">
+      <nav aria-label="Breadcrumb" className="">
         <ol role="list" className="max-w-2xl mx-auto px-4 flex items-center space-x-2 lg:max-w-7xl lg:px-16">
           <li>
             <div className="flex items-center">
@@ -135,96 +135,98 @@ const ProductOverview = ({ match }) => {
           </li>
         </ol>
       </nav>
-      <div className="lg:h-auto mt-1 pt-2 max-w-2xl mx-auto sm:px-6 lg:mt-10 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
-        {/* Image gallery */}
-          <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-6")}>
-            <img
-              src={process.env.PUBLIC_URL + product.image.src}
-              alt={product.name}
-              className="w-full h-full object-center object-cover lg:rounded-sm"
-            />
-          </div>
+      <div className="flex flex-col justify-center items-center lg:h-full">
+        <div className="lg:h-auto pt-2 w-full sm:px-6 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
+          {/* Image gallery */}
+            <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-6")}>
+              <img
+                src={process.env.PUBLIC_URL + product.image.src}
+                alt={product.name}
+                className="w-full h-full object-center object-cover lg:rounded-sm"
+              />
+            </div>
 
-        {/* Product info */}
-        <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-5")}>
-          <div className="pl-1">
-            <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">{product.name+(product.amount?", "+product.amount:"")}</h1>
-          </div>
+          {/* Product info */}
+          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-5")}>
+            <div className="pl-1">
+              <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">{product.name+(product.amount?", "+product.amount:"")}</h1>
+            </div>
 
-          {/* Options */}
-          <div className="lg:row-span-3 mt-4">
-            <div>
-              <div className="align-text-bottom  sm:text-xl text-lg font-medium">
-                <span className="px-2 mb-3 text-gray-600 m-0">개당 {product.price}원</span>
-              </div>
-              
-              <div className="pl-2 py-5 lg:py-6 lg:col-start-1 lg:col-span-2 lg:pr-8">
-                <h3 className="text-sm font-medium text-gray-400">공구 게시자: {product.author.class + ' ' + product.author.name}</h3>
-                <h3 className="text-base font-medium text-gray-600">{product.text}</h3>
-                <div className="my-4 lg:my-8">
-                  <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
-                  <div className="mt-3 pl-4 list-disc text-sm space-y-1">
-                    <ul>{product.count} / {product.maxCount} 개</ul>
-                    {product.targetCount!==0?<ul>목표수량 : {product.targetCount}개</ul>:null}
-                    <ul>{product.date} 까지</ul>
+            {/* Options */}
+            <div className="lg:row-span-3 mt-4">
+              <div>
+                <div className="align-text-bottom  sm:text-xl text-lg font-medium">
+                  <span className="px-2 mb-3 text-gray-600 m-0">개당 {product.price}원</span>
+                </div>
+                
+                <div className="pl-2 py-5 lg:py-6 lg:col-start-1 lg:col-span-2 lg:pr-8">
+                  <h3 className="text-sm font-medium text-gray-400">공구 게시자: {product.author.class + ' ' + product.author.name}</h3>
+                  <h3 className="text-base font-medium text-gray-600">{product.text}</h3>
+                  <div className="my-4 lg:my-8">
+                    <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
+                    <div className="mt-3 pl-4 list-disc text-sm space-y-1">
+                      <ul>{product.count} / {product.maxCount} 개</ul>
+                      {product.targetCount!==0?<ul>목표수량 : {product.targetCount}개</ul>:null}
+                      <ul>{product.date} 까지</ul>
+                    </div>
+                    {product.targetCount!==0?<ul className="mt-3 text-sm opacity-50">※목표수량에 도달되지 못하면 주문이 취소될 수 있습니다.</ul>:null}
                   </div>
-                  {product.targetCount!==0?<ul className="mt-3 text-sm opacity-50">※목표수량에 도달되지 못하면 주문이 취소될 수 있습니다.</ul>:null}
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-gray-500">상세링크</h3>
-                  <div className="mt-3 pl-4 space-y-1 text-sm text-gray-600 hover:text-indigo-600">
-                    <a href={product.link}>자세히보기</a>
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500">상세링크</h3>
+                    <div className="mt-3 pl-4 space-y-1 text-sm text-gray-600 hover:text-indigo-600">
+                      <a href={product.link}>자세히보기</a>
+                    </div>
                   </div>
                 </div>
+                <form className="algin-bottom">
+                  <div className="lg:py-2 py-6 ml-3 float-left">
+                    <input className="border p-1 mr-2 w-20 rounded" min="1" type="number" value={value} onChange={onChange} disabled={product.value!==0 ? true : false} />개
+                  </div>
+                  <button
+                    type="submit"
+                    onClick={onClick}
+                    className={"w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center " + 
+                    "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none float-right mb-6 lg:m-0 "
+                    + (product.author.name===user1?"lg:w-36" : "lg:w-48")}>
+                    {product.value!==0?"취소하기":"신청하기"}
+                  </button>
+                </form>
               </div>
-              <form className="algin-bottom">
-                <div className="lg:py-2 py-6 ml-3 float-left">
-                  <input className="border p-1 mr-2 w-20 rounded" min="1" type="number" value={value} onChange={onChange} disabled={product.value!==0 ? true : false} />개
-                </div>
-                <button
-                  type="submit"
-                  onClick={onClick}
-                  className={"w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center " + 
-                  "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none float-right mb-6 lg:m-0 "
-                  + (product.author.name===user1?"lg:w-36" : "lg:w-48")}>
-                  {product.value!==0?"취소하기":"신청하기"}
-                </button>
-              </form>
             </div>
+            <span className="ml-3 mt-3 text-sm opacity-50">※추가 구매를 원할 경우 취소후 재신청 부탁드립니다.</span>
           </div>
-          <span className="ml-3 mt-3 text-sm opacity-50">※추가 구매를 원할 경우 취소후 재신청 부탁드립니다.</span>
-        </div>
-        {product.author.name===user1 ? (
-        <div className={"h-[29rem] pr-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-3":"hidden")}>
-          <div className="flex justify-center mt-5 mb-3 h-10 lg:h-8">
-            <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
-          </div>
-          {product.user?
-          <>
-            <div className="h-[15rem] lg:h-[27rem] overflow-y-scroll  w-full">
-              <div className="flex flex-col items-center">
-                {product.user.map((user, i) => (
-                  <div key={i} className="p-2 border-b flex h-auto ">
-                    <div className="pr-2">
-                      {i+1}.
+          {product.author.name===user1 ? (
+          <div className={"h-[29rem] pr-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-3":"hidden")}>
+            <div className="flex justify-center mt-5 mb-3 h-10 lg:h-8">
+              <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
+            </div>
+            {product.user?
+            <>
+              <div className="h-[15rem] lg:h-[27rem] overflow-y-scroll  w-full">
+                <div className="flex flex-col items-center">
+                  {product.user.map((user, i) => (
+                    <div key={i} className="p-2 border-b flex h-auto ">
+                      <div className="pr-2">
+                        {i+1}.
+                      </div>
+                      <div className="pr-2">
+                        {user.userclass + " " + user.name}:
+                      </div>
+                      <div>
+                        {user.count}개
+                      </div>
                     </div>
-                    <div className="pr-2">
-                      {user.userclass + " " + user.name}:
-                    </div>
-                    <div>
-                      {user.count}개
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="self-end my-3 mr-10 py-2 border-b">
-              총: {product.count}개
-            </div>
-          </>:
-          <div>신청자가 없습니다.</div>}
+              <div className="self-end my-3 mr-10 py-2 border-b">
+                총: {product.count}개
+              </div>
+            </>:
+            <div>신청자가 없습니다.</div>}
+          </div>
+          ):''}
         </div>
-        ):''}
       </div>
     </div>
   )

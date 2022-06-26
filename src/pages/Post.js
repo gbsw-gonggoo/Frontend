@@ -101,28 +101,28 @@ const Post = () => {
               <div className="text-[0.95rem] font-medium my-2">
                 <div className="my-2 list-disc text-[0.95rem] flex items-center">
                   <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='name'>물품명 : </label></h3>
-                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="text" name='name' id='name' vlaue={name} onChange={(e) => setName(e.target.value)} placeholder='ex ) 칠성사이다' />
+                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="text" name='name' id='name' value={name} onChange={(e) => setName(e.target.value)} placeholder='ex ) 칠성사이다' />
                 </div>
                 <div className="my-2 list-disc text-[0.95rem] flex items-center">
                   <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='amount'>용량 : </label></h3>
-                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="text" name='amount' id='amount' vlaue={amount} onChange={(e) => setAmount(e.target.value)}  placeholder='ex ) 210ml' />
+                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="text" name='amount' id='amount' value={amount} onChange={(e) => setAmount(e.target.value)}  placeholder='ex ) 210ml' />
                 </div>
                 <div className="my-2 list-disc text-[0.95rem] flex items-center">
                 <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='price'>개당 가격 : </label></h3>
-                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="number" name='price' id='price' vlaue={price} onChange={(e) => setPrice(e.target.value)}  placeholder='ex ) 600' />
+                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="number" name='price' id='price' value={price} onChange={(e) => setPrice(e.target.value)}  placeholder='ex ) 600' />
                 </div>
                 <div className="my-2 list-disc text-[0.95rem] flex items-start">
                 <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='text'>상세내용 : </label></h3>
-                <textarea className="border p-1 mx-2 w-64 rounded px-2 " type="number" name='text' id='text' vlaue={text} onChange={(e) => setText(e.target.value)}  placeholder='ex ) 구매해주세요'/>
+                <textarea className="border p-1 mx-2 w-64 rounded px-2 " type="number" name='text' id='text' value={text} onChange={(e) => setText(e.target.value)}  placeholder='ex ) 구매해주세요'/>
                 </div>
               </div>
               <div className="py-2 lg:p-0 lg:mb-6 lg:pt-0 lg:col-start-1 lg:col-span-2">
                 <div className="my-2 lg:my-2">
                   <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
                   <div className="mt-3 pl-4 list-disc text-[0.95rem] space-y-1">
-                    <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">목표수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="targetCount" id="targetCount" vlaue={targetCount} onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">목표수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="targetCount" id="targetCount" value={targetCount} onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
                     <ul className="text-sm opacity-50">※목표하는 수량이 없다면 0으로 게시해주세요.</ul>
-                    <ul className="flex items-center"><p className="w-20" htmlFor="maxCount">마감수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="maxCount" id="maxCount" vlaue={maxCount} onChange={(e) => setMaxCount(e.target.value)} placeholder='ex ) 30' />개</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="maxCount">마감수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="maxCount" id="maxCount" value={maxCount} onChange={(e) => setMaxCount(e.target.value)} placeholder='ex ) 30' />개</ul>
                     <ul className="flex items-center"><p className="w-20" htmlFor="date">마감일 : </p><input className="border p-0.5 mx-2 w-40 rounded" type='date' name="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} /> 까지</ul>
                   </div>
                 </div>
