@@ -9,7 +9,7 @@ const SignUp = () => {
   const [passwordChk, setPasswordChk] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [userClass, setUserClass] = useState("");
+  const [number, setNumber] = useState("");
 
   const navigation = useNavigate();
   function goBack ()  {
@@ -28,12 +28,18 @@ const SignUp = () => {
       passwordChk: passwordChk,
       name: name,
       email: email,
-      userClass: userClass,
+      number: number,
     };
 
     axios
-      .post("http://172.16.1.42:8002/auth/signup", body)
-      .then((res) => console.log(res));
+      .post("/api/auth/signup", body, { withCredentials: true })
+      .then((res) => {
+        if(!res.data.success) {
+          alert(res.data.message)
+        }
+        console.log(res.data)
+        // window.location.href = "/"
+      });
   
   };
 
@@ -103,13 +109,13 @@ const SignUp = () => {
                   반번호
                 </label>
                 <input
-                  id="userClass"
-                  name="userClass"
+                  id="number"
+                  name="number"
                   type="number"
                   autoComplete="current-name"
                   required={required}
-                  value={userClass}
-                  onChange={(e) => setUserClass(e.target.value)}
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="반번호"
                 />

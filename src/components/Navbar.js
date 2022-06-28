@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { faHouse, faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+// import { useCookies } from 'react-cookie';
 
 const navigation = [
   { name: "home", icon: faHouse, to: '/', current: true },
   { name: "post", icon: faPlus, to: '/post', current: true },
 ]
-
-const user = {
-  name: '1',
-  img: '/무서운이야기1.jpg'
-}
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -22,12 +18,38 @@ function classNames(...classes) {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [user, setUser] = useState({})
+  const [token, setToken] = useState(localStorage.getItem("token"));
   
-  async function Logout() {
-    // const response = await axios.get("http://172.16.1.42:8002/auth/logout", { withCredentials = true })
-    // console.log(response)
-    window.location.href = "/";
+  const Logout = async () => {
+    const response = await axios.get("/api/auth/logout", { withCredentials: true })
+    console.log(response)
+    
+    if (response.data.success) {
+      console.log('로그아웃 성공')
+      localStorage.removeItem("token")
+      window.location.href = "/";
+    } else {
+      console.log('로그인 안되어있음')
+    }
   }
+
+  useEffect(() => {
+    checkLogin()
+  }, [])
+
+  const checkLogin = async () => {
+    let result = await axios.get("/api/user", { withCredentials: true })
+    if(!result.data.user) localStorage.removeItem('token')
+    if (result.data.success) {
+      setUser(result.data.user)
+      console.log(result.data.user)
+    } else {
+      setUser({name: '', img: ''})
+    }
+  }
+
+
   
   return (
     <>
@@ -67,13 +89,13 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
-                {user.name?(
+                {token?(
                   <Menu as="div" className="ml-3 relative">
                     <div>
-                      <Menu.Button className="overflow-hidden rounded-full flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none ">
+                      <Menu.Button className="overflow-hidden flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none ">
                         <img
-                          className=""
-                          src={`${process.env.PUBLIC_URL}/user${user.img}`}
+                          src={user.profileImg?user.profileImg:`${process.env.PUBLIC_URL}/users/cat.jpg`}
+                          alt={user.name}
                         />
                       </Menu.Button>
                     </div>

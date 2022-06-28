@@ -1,84 +1,41 @@
-// import { faCommentsDollar } from '@fortawesome/free-solid-svg-icons';
-import { ChevronLeftIcon } from '@heroicons/react/outline';
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom';
+import axios from "axios";
+import { format } from "date-fns";
+import { setDate } from 'date-fns/esm';
 
-const products = {
-  id: 1,
-  name: '칠성사이다',
-  image: {
-    src: '/product/칠성사이다.png',
-  },
-  amount: '210ml',
-  price: '600',
-  text: '구매해주세요',
-  targetCount: 0,
-  count: 12,
-  maxCount: 30,
-  date: '2022-04-30',
-  link: 'https://www.coupang.com/vp/products/319152577?itemId=230425388&vendorItemId=3590493048&pickType=COU_PICK&q=%EC%B9%A0%EC%84%B1%EC%82%AC%EC%9D%B4%EB%8B%A4&itemsCount=36&searchId=89b7e2093afa4ba69ca45c2a14b8b0b5&rank=1',
-  value: 0,
-  author: {
-    name: '김성현',
-    class: '2104',
-  },
-  user : [
-    {
-      userclass: 1234,
-      name: '김성현',
-      count: 3,
-    },
-    {
-      userclass: 1234,
-      name: '김강현',
-      count: 1,
-    },
-    {
-      userclass: 1234,
-      name: '김동혁',
-      count: 1,
-    },
-    {
-      userclass: 1234,
-      name: '조수빈',
-      count: 4,
-    },
-    {
-      userclass: 1234,
-      name: '박민혁',
-      count: 2,
-    },
-    {
-      userclass: 1234,
-      name: '김성희',
-      count: 1,
-    },
-  ]
-}
 
 const user1 = '김성현';
 
 
 
 const ProductOverview = ({ match }) => {
-  const location = useLocation();
   const [product, setProduct] = useState({})
   const [value, setValue] = useState(product?.value?product.value:1)
   const {id} = useParams();
+  const [success, setSuccess] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"))
+
+  const format = (date) => {
+    const day = new Date(date);
+    return day.getFullYear() + "-" + (day.getMonth()+1) + "-" + day.getDate();
+  }
 
   useEffect(() => {
     loadData();
   },[]);
 
-  async function loadData() {
-    const data = await fetch(`http://172.16.1.42:8002/product/${id}`)
-      .then((res) => res.json())
-      .catch(() => ({ success: false }))
-    // console.log(data)
-    // const data = {success: false};
-    if(data.success) setProduct({...data.product});
-    else setProduct({...products});
-    //window.location.href = "http://localhost:3002/";
+  const loadData = async () => {
+    const result =  await axios.get(`/api/product/${id}`, {withCredentials: true})
+
+    if (result.data.success) {
+      setSuccess(true);
+      console.log(result.data)
+      setProduct(result.data.product)
+    } else {
+      if(result.data.success) setSuccess(true);
+      window.location.href = "/login"
+    }
   }
 
   const onChange = e => {
@@ -86,17 +43,22 @@ const ProductOverview = ({ match }) => {
   }
 
   const onClick = e => {
-    if(!value) {
-      alert('취소하시겠습니까?')
-      setValue('');
+    if(token) {
+      if(!value) {
+        alert('취소하시겠습니까?')
+        setValue('');
+      } else {
+        alert('신청하시겠습니까?');
+        setValue(value);
+      }
+      loadData();
     } else {
-      alert('신청하시겠습니까?');
-      setValue(value);
+      alert('로그인 후 이용해주세요');
+      window.location.href("/login");
     }
-    loadData();
   }
 
-  if (!Object.keys(product).length) {
+  if (!success) {
     return (
       <div className="bg-white w-full h-full fixed top-0 flex justify-center items-center">
         <div class="loadingio-spinner-rolling-nujnwn5po0q">
@@ -138,16 +100,17 @@ const ProductOverview = ({ match }) => {
       <div className="flex flex-col justify-center items-center lg:h-full">
         <div className="lg:h-auto pt-2 w-full sm:px-6 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
           {/* Image gallery */}
-            <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-6")}>
+            <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author===user1?"lg:col-span-4" : "lg:col-span-6")}>
               <img
-                src={process.env.PUBLIC_URL + product.image.src}
+                // src={process.env.PUBLIC_URL + product.image.src}
+                src = {product.image}
                 alt={product.name}
                 className="w-full h-full object-center object-cover lg:rounded-sm"
               />
             </div>
 
           {/* Product info */}
-          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.author.name===user1?"lg:col-span-4" : "lg:col-span-5")}>
+          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.author===user1?"lg:col-span-4" : "lg:col-span-5")}>
             <div className="pl-1">
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">{product.name+(product.amount?", "+product.amount:"")}</h1>
             </div>
@@ -160,14 +123,14 @@ const ProductOverview = ({ match }) => {
                 </div>
                 
                 <div className="pl-2 py-5 lg:py-6 lg:col-start-1 lg:col-span-2 lg:pr-8">
-                  <h3 className="text-sm font-medium text-gray-400">공구 게시자: {product.author.class + ' ' + product.author.name}</h3>
-                  <h3 className="text-base font-medium text-gray-600">{product.text}</h3>
+                  <h3 className="text-sm font-medium text-gray-400">공구 게시자: {product.name + ' ' + product.author}</h3>
+                  <h3 className="text-base font-medium text-gray-600">{product.text?product.text:""}</h3>
                   <div className="my-4 lg:my-8">
                     <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
                     <div className="mt-3 pl-4 list-disc text-sm space-y-1">
                       <ul>{product.count} / {product.maxCount} 개</ul>
-                      {product.targetCount!==0?<ul>목표수량 : {product.targetCount}개</ul>:null}
-                      <ul>{product.date} 까지</ul>
+                      {product.targetCount!==0?<ul>최소수량 : {product.targetCount}개</ul>:null}
+                      <ul>{format(product.date)} 까지</ul>
                     </div>
                     {product.targetCount!==0?<ul className="mt-3 text-sm opacity-50">※목표수량에 도달되지 못하면 주문이 취소될 수 있습니다.</ul>:null}
                   </div>
@@ -187,7 +150,7 @@ const ProductOverview = ({ match }) => {
                     onClick={onClick}
                     className={"w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center " + 
                     "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none float-right mb-6 lg:m-0 "
-                    + (product.author.name===user1?"lg:w-36" : "lg:w-48")}>
+                    + (product.author===user1?"lg:w-36" : "lg:w-48")}>
                     {product.value!==0?"취소하기":"신청하기"}
                   </button>
                 </form>
@@ -195,8 +158,8 @@ const ProductOverview = ({ match }) => {
             </div>
             <span className="ml-3 mt-3 text-sm opacity-50">※추가 구매를 원할 경우 취소후 재신청 부탁드립니다.</span>
           </div>
-          {product.author.name===user1 ? (
-          <div className={"h-[29rem] pr-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author.name===user1?"lg:col-span-3":"hidden")}>
+          {product.author===user1 ? (
+          <div className={"h-[29rem] pr-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author===user1?"lg:col-span-3":"hidden")}>
             <div className="flex justify-center mt-5 mb-3 h-10 lg:h-8">
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
             </div>

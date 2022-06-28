@@ -12,55 +12,12 @@ const Post = () => {
   const [link, setLink] = useState('');
   const [img, setImg] = useState("https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image");
   const [imgFile, setImgFile] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"))
 
   function submitImgFile(file) {
     const formData = new FormData();
     formData.append('file', file);
-    axios.post("http://172.16.1.42:8002/img/", formData).then(res => console.log(res));
-    console.log(file);
-    console.log("사진 전송!");
-  }
-
-  function readImage(input, id) {
-    const file = input.files[0];
-    if(input.files && file) {
-      const reader = new FileReader()
-      reader.onload = e => {
-        setImg(e.target.result);
-      }
-      reader.readAsDataURL(file);
-      setImgFile(file);
-    }
-  };
-  
-  const submitHandler = (e) => {
-    if(window.confirm("등록하시겠습니까?") === false) {
-      return false;
-    }
-    
-    e.preventDefault();
-
-    let body = {
-      name: name,
-      amount: amount,
-      price: price,
-      text: text,
-      targetCount: targetCount,
-      maxCount: maxCount,
-      date: date,
-      link: link,
-    };
-
-    submitImgFile(imgFile);
-
-    // axios.post("http://172.16.1.42:8002/mypage", body)
-    //   .then((res) => {console.log(res)});
-  };
-
-  function submitImgFile(path, file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    axios.post(`http://172.16.1.42:8002/product/${path}`, formData).then(res => console.log(res));
+    axios.post("/api/product/img", formData, { withCredentials: true }).then(res => console.log(res));
     console.log(file);
     console.log("사진 전송!");
   }
@@ -73,10 +30,37 @@ const Post = () => {
         setImg(e.target.result);
       }
       reader.readAsDataURL(file);
-
-      submitImgFile("img", file);
+      setImgFile(file);
     }
   };
+  
+  const submitHandler = (e) => {
+    if(!token) {
+      alert("로그인 후 이용해주세요");
+      window.location.href = "/login"
+    } else {
+      if(window.confirm("등록하시겠습니까?") === false) {
+        return false;
+      }
+      e.preventDefault();
+
+      let body = {
+        name: name,
+        amount: amount,
+        price: price,
+        text: text,
+        targetCount: targetCount,
+        maxCount: maxCount,
+        date: date,
+        link: link,
+      };
+  
+      submitImgFile(imgFile);
+
+      axios.post("/api/product", body, { withCredentials : true })
+        .then((res) => {console.log(res)});
+      };
+    }
   
   return (
     <div className="bg-white overflow-auto flex flex-col justify-center items-center h-full">
@@ -85,7 +69,7 @@ const Post = () => {
           <div className="aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y sm:border sm:mt-5 lg:border overflow-hidden h-90 lg:h-[34rem] lg:col-span-6">
             <img 
               className="w-full lg:h-[28rem] object-center object-cover lg:rounded-sm mb-4 sm:border"
-              id="preview-image" src={img} />
+              id="preview-image" src={img} alt="preview" />
             <input
               type='file'
               id="avatar"
@@ -120,7 +104,7 @@ const Post = () => {
                 <div className="my-2 lg:my-2">
                   <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
                   <div className="mt-3 pl-4 list-disc text-[0.95rem] space-y-1">
-                    <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">목표수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="targetCount" id="targetCount" value={targetCount} onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">최소수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="targetCount" id="targetCount" value={targetCount} onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
                     <ul className="text-sm opacity-50">※목표하는 수량이 없다면 0으로 게시해주세요.</ul>
                     <ul className="flex items-center"><p className="w-20" htmlFor="maxCount">마감수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="maxCount" id="maxCount" value={maxCount} onChange={(e) => setMaxCount(e.target.value)} placeholder='ex ) 30' />개</ul>
                     <ul className="flex items-center"><p className="w-20" htmlFor="date">마감일 : </p><input className="border p-0.5 mx-2 w-40 rounded" type='date' name="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} /> 까지</ul>
@@ -128,7 +112,7 @@ const Post = () => {
                 </div>
                 <div className="my-2 lg:my-0 lg:py-2">
                   <h3 className="text-sm font-medium text-gray-500"><label htmlFor='link'>상세링크</label></h3>
-                  <div className="mt-3 pl-8 pr-5 space-y-1 text-[0.95rem] text-gray-600 hover:text-indigo-600">
+                  <div className="mt-3 pl-8 pr-5 space-y-1 text-[0.95rem] text-gray-600">
                     <input className="border p-1 w-full rounded" type="text" name='link' id='link' value={link} onChange={(e) => setLink(e.target.value)}  placeholder='ex ) https://gonggoo.gbsw.hs.kr' />
                   </div>
                 </div>
@@ -136,7 +120,7 @@ const Post = () => {
               <form className="algin-bottom">
                 <button
                   type="submit"
-                  onChange={(e) => submitHandler(e)}
+                  onClick={(e) => submitHandler(e)}
                   className="w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center
                     text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 float-right mb-6 lg:m-0 ">
                   게시하기
