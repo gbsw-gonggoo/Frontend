@@ -116,9 +116,14 @@ function MyPage() {
   //   )
   // }
 
+  useEffect(() => {
+    if(!token) {
+      alert("로그인 후 이용해주세요")
+      window.location.href = "/";
+    }
+  }, [token])
+
   if(!token) {
-    alert("로그인 후 이용해주세요")
-    window.location.href = "/";
     return (
       <div className="bg-slate-50 w-full h-full fixed top-0 flex justify-center items-center">
         <div class="loadingio-spinner-rolling-nujnwn5po0q">
