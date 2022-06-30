@@ -28,6 +28,9 @@ const ProductOverview = () => {
     }
     e.preventDefault();
     console.log("삭제 중..")
+    axios.delete(`/api/product/${id}`, {}, { withCredentials : true })
+      .then((res) => {console.log(res)});
+    window.location.href = "/";
   }
 
   const loadData = async () => {
@@ -94,8 +97,8 @@ const ProductOverview = () => {
 
   return (
     <div className="bg-white pt-4 h-full overflow-auto flex flex-col">
-        <div className="flex justify-between max-w-2xl lg:max-w-7xl w-full lg:px-16 m-auto">
-          <nav aria-label="Breadcrumb" className="">
+        <div className="flex justify-between max-w-2xl lg:max-w-7xl sm:max-w-full w-full lg:px-16 m-auto">
+          <nav aria-label="Breadcrumb" className="sm:ml-4">
             <ol role="list" className="flex items-centermx-auto px-4 space-x-2 ">
               <li>
                 <div className="flex items-center">
@@ -136,17 +139,17 @@ const ProductOverview = () => {
       <div className="flex flex-col justify-center items-center lg:h-full">
         <div className="lg:h-auto pt-2 w-full sm:px-6 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
           {/* Image gallery */}
-            <div className={"aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author===user?"lg:col-span-4" : "lg:col-span-6")}>
-              <img
-                // src={process.env.PUBLIC_URL + product.image.src}
-                src = {product.image}
-                alt={product.name}
-                className="w-full h-full object-center object-cover lg:rounded-sm"
-              />
-            </div>
+          <div className={"my-2 aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author===user?"lg:col-span-4" : "lg:col-span-6")}>
+            <img
+              // src={process.env.PUBLIC_URL + product.image.src}
+              src = {product.image}
+              alt={product.name}
+              className="w-full h-full object-center object-cover lg:rounded-sm"
+            />
+          </div>
 
           {/* Product info */}
-          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-6 lg:px-8 w-full " + (product.author===user?"lg:col-span-4" : "lg:col-span-5")}>
+          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-2 lg:px-8 w-full " + (product.author===user?"lg:col-span-4" : "lg:col-span-5")}>
             <div className="pl-1">
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">{product.name+(product.amount?", "+product.amount:"")}</h1>
             </div>
@@ -195,8 +198,8 @@ const ProductOverview = () => {
             <span className="ml-3 mt-3 text-sm opacity-50">※취소를 원할 경우 갯수를 0개로 수정 부탁드립니다.</span>
           </div>
           {product.author===user ? (
-          <div className={"h-[29rem] px-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author===user?"lg:col-span-3":"hidden")}>
-            <div className="flex justify-center mt-5 mb-3 h-10 lg:h-8">
+          <div className={"py-2 px-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author===user?"lg:col-span-3":"hidden")}>
+            <div className="flex justify-center mb-3 h-10 lg:h-8">
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
             </div>
             <div className="h-[15rem] lg:h-[23.2rem]">

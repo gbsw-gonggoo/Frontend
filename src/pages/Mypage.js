@@ -25,8 +25,8 @@ function MyPage() {
   useEffect(() => {
     loadData();
   },[]);
+
   useEffect(() => {
-    // console.log(result.data.user)
     console.log(user)
     
     setNickname(user.nickname)
@@ -44,10 +44,11 @@ function MyPage() {
       setUser(result.data.user)
       if(product.data.success) setProducts(product.data.product)
       if(product1.data.success) setProducts1(product1.data.product)
+      console.log(product)
+      console.log(product1)
     } else {
       window.location.href = "/"
     }
-    // console.log(user) 
   }
 
   function setProfilePicture(input) {
@@ -132,7 +133,7 @@ function MyPage() {
     }
   }, [token])
 
-  if(!token) {
+  if(!token||!Object.keys(user).length) {
     return (
       <div className="bg-slate-50 w-full h-full fixed top-0 flex justify-center items-center">
         <div class="loadingio-spinner-rolling-nujnwn5po0q">
@@ -235,7 +236,7 @@ function MyPage() {
                       <div className="flex justify-between py-5 lg:py-4 px-4 items-center hover:bg-slate-50	">
                         <div className="flex items-center">
                           <img
-                            src={process.env.PUBLIC_URL + product.image.src}
+                            src={product.image}
                             alt={product.name}
                             className="w-14 h-14 rounded-full mr-4" />
                           <div>
@@ -272,7 +273,7 @@ function MyPage() {
                                     <ul className="flex justify-center">{format(product.date)} <span className="text-[0.9rem] ml-0.5">까지</span></ul>
                                 </div>
                                 <img
-                                  src={process.env.PUBLIC_URL + product.image.src}
+                                  src={product.image}
                                   alt={product.name}
                                   className="hover-img w-full h-full object-center object-cover rounded-sm img-text-hover"
                                 />
@@ -295,7 +296,7 @@ function MyPage() {
                         {products1.map(product => (
                           <div className="flex items-center py-5 px-4" key={product.id}>
                             <img
-                              src={process.env.PUBLIC_URL + product.image.src}
+                              src={product.image}
                               alt={product.name}
                               className="w-14 h-14 rounded-full mr-4" />
                             <div>
