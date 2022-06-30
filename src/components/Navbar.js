@@ -19,6 +19,7 @@ function classNames(...classes) {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState({})
+  const [profileImg, setProfileImg] = useState(`${process.env.PUBLIC_URL}/users/defaultProfileImg.png`)
   const [token, setToken] = useState(localStorage.getItem("token"));
   
   const Logout = async () => {
@@ -37,6 +38,10 @@ const Navbar = () => {
   useEffect(() => {
     checkLogin()
   }, [])
+
+  useEffect(() => {
+    if(user.profileImg) setProfileImg(user.profileImg)
+  }, [user])
 
   const checkLogin = async () => {
     let result = await axios.get("/api/user", { withCredentials: true })
@@ -92,9 +97,10 @@ const Navbar = () => {
                 {token?(
                   <Menu as="div" className="ml-3 relative">
                     <div>
-                      <Menu.Button className="overflow-hidden flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none ">
+                      <Menu.Button className="overflow-hidden flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none">
                         <img
-                          src={user.profileImg?user.profileImg:`${process.env.PUBLIC_URL}/users/cat.jpg`}
+                          className="w-full h-full overflow-hidden"
+                          src={profileImg}
                           alt={user.name}
                         />
                       </Menu.Button>

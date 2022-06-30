@@ -36,9 +36,10 @@ const SignUp = () => {
       .then((res) => {
         if(!res.data.success) {
           alert(res.data.message)
+        } else {
+          console.log(res.data)
+          window.location.href = "/"
         }
-        console.log(res.data)
-        // window.location.href = "/"
       });
   
   };

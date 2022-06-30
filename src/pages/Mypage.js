@@ -12,8 +12,9 @@ function MyPage() {
   const [fixButton, setFixButton] = useState(false);
   const [nickname, setNickname] = useState(user.nickname);
   const [email, setEmail] = useState(user.email);
-  const [img, setImg] = useState(`${process.env.PUBLIC_URL}/users/cat.jpg`);
+  const [img, setImg] = useState(`${process.env.PUBLIC_URL}/users/defaultProfileImg.png`);
   const [submitImg, setSubmitImg] = useState([]);
+  const [backgroundImg, setBackgroundImg] = useState(`${process.env.PUBLIC_URL}/users/cat.jpg`);
   const [token, setToken] = useState(localStorage.getItem("token")) 
 
   const format = (date) => {
@@ -30,14 +31,19 @@ function MyPage() {
     
     setNickname(user.nickname)
     setEmail(user.email)
-    setImg(user.profileImg)
+    if(user.profileImg) setImg(user.profileImg)
+    if(user.backgroundImg) setBackgroundImg(user.backgroundImg)
   }, [user])
 
   const loadData = async () => {
     let result = await axios.get("/api/user", { withCredentials: true })
+    let product = await axios.get("/api/product", { withCredentials: true })
+    let product1 = await axios.get("/api/product", { withCredentials: true })
 
     if (result.data.success) {
       setUser(result.data.user)
+      if(product.data.success) setProducts(product.data.product)
+      if(product1.data.success) setProducts1(product1.data.product)
     } else {
       window.location.href = "/"
     }
@@ -81,7 +87,10 @@ function MyPage() {
     if(window.confirm("수정하시겠습니까?") === false) {
       setNickname(user.nickname);
       setEmail(user.email);
-      setImg(user.profileImg);
+      if(user.profileImg) setImg(user.profileImg);
+      else setImg(`${process.env.PUBLIC_URL}/users/defaultProfileImg.png`)
+      if(user.backgroundImg) setBackgroundImg(user.backgroundImg);
+      else setBackgroundImg(`${process.env.PUBLIC_URL}/users/cat.jpg`)
       return false;
     }
     return true;
@@ -140,7 +149,7 @@ function MyPage() {
             <img
               id="profile-bg-img"
               className="w-full h-full object-cover rounded-md lg:rounded-2xl"
-              src={user.backgroundImg?user.backgroundImg:`${process.env.PUBLIC_URL}/users/cat.jpg`}
+              src={backgroundImg}
               alt="backgroundImg"
               />
             <div className="rounded-md w-7 h-7 flex justify-center items-center bg-white text-slate-500 text-sm lg:m-5 absolute top-0 right-0 mt-6 mr-1">
@@ -246,13 +255,13 @@ function MyPage() {
             <div className="lg:px-8 px-4 lg:mt-5 mb-5 h-auto">
               <div className="w-full h-full mb-5">
                 <div className="font-semibold mb-2 mt-10 lg:mt-5">내가 올린 게시물</div>
-                <div className="flex flex-col lg:flex-row justify-between">
+                <div className="flex flex-col lg:flex-row justify-between w-full overflow-auto">
                   {!products1?
                     <div>
                       게시한 공동구매가 없습니다.
                     </div>:
                     <div>
-                      <div className="hidden my-2 py-2 lg:flex overflow-auto">
+                      <div className="my-2 py-2 lg:flex">
                         {products1.map((product) => (
                           <Link to={`/product/${product.id}`} key={product.id}>
                             <div className="group w-60 border rounded-md bg-white mx-2">

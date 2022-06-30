@@ -5,31 +5,24 @@ import axios from "axios";
 const FindId = () => {
   const [required, setRequired] = useState(true);
   const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
   const navigation = useNavigate();
   function goBack ()  {
     navigation(-1);
     setRequired(true);
   }
-  function emailAuth(e) {
+
+  const emailAuth = (e) => {
     e.preventDefault();
-    console.log(email);
 
     let body = {
-      email: email,
+      name : name,
+      email : email,
     };
 
-    // axios
-    //   .post("http://172.16.1.42:3508/login", body)
-    //   .then((res) => console.log(res));
-  
-    loadData();
-  }
-
-  async function loadData() {
-    // const response = await fetch('http://172.16.1.42:3508/login');
-    // const data = await response.json();
-    // console.log(data); 
-  }
+    axios.post("/api/email", body, { withCredentials : true })
+      .then((res) => {console.log(res)}); 
+  };
 
 
   return (
@@ -55,6 +48,8 @@ const FindId = () => {
                   type="text"
                   autoComplete="userid"
                   required={required}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="이름"
                 />

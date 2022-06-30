@@ -23,6 +23,7 @@ const ProductList = () => {
     if(result.data) {
       setSuccess(true);
     } 
+    console.log(result.data)
     setProducts(result.data.product)
   }
 

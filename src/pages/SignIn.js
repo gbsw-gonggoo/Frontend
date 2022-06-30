@@ -19,8 +19,7 @@ const SignIn = () => {
 
     axios.defaults.withCredentials = true;
 
-    axios
-      .post("/api/auth/login", body, { withCredentials: true})
+    axios.post("/api/auth/login", body, { withCredentials: true})
       .then((res) => {
         if (res.data.success) {
           localStorage.setItem("token", true);
@@ -31,7 +30,8 @@ const SignIn = () => {
           // widow.location.href = "/";
           alert("로그인을 실패했습니다.")
         }
-      });
+      }
+    );
   };
 
   if(token) {

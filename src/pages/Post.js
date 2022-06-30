@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 const Post = () => {
@@ -13,6 +13,10 @@ const Post = () => {
   const [img, setImg] = useState("https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image");
   const [imgFile, setImgFile] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"))
+
+  useEffect(() => {
+    checkDate();
+  })
 
   function submitImgFile(file) {
     const formData = new FormData();
@@ -31,6 +35,7 @@ const Post = () => {
       }
       reader.readAsDataURL(file);
       setImgFile(file);
+      console.log(imgFile.size);
     }
   };
   
@@ -38,29 +43,46 @@ const Post = () => {
     if(!token) {
       alert("로그인 후 이용해주세요");
       window.location.href = "/login"
-    } else {
-      if(window.confirm("등록하시겠습니까?") === false) {
+    } 
+    else {
+      if(!imgFile.size) {
+        alert("이미지를 등록해주세요");
+        e.preventDefault();
         return false;
       }
-      e.preventDefault();
+      else {
+        if(window.confirm("등록하시겠습니까?") === false) {
+          return false;
+        }
+        e.preventDefault();
 
-      let body = {
-        name: name,
-        amount: amount,
-        price: price,
-        text: text,
-        targetCount: targetCount,
-        maxCount: maxCount,
-        date: date,
-        link: link,
-      };
-  
-      submitImgFile(imgFile);
+        let body = {
+          name: name,
+          amount: amount,
+          price: price,
+          text: text,
+          targetCount: targetCount,
+          maxCount: maxCount,
+          date: date,
+          link: link,
+        };
+    
+        submitImgFile(imgFile);
 
-      axios.post("/api/product", body, { withCredentials : true })
-        .then((res) => {console.log(res)});
+        axios.post("/api/product", body, { withCredentials : true })
+          .then((res) => {console.log(res)});
+        
+        window.location.href = "/"
       };
     }
+  }
+
+  const checkDate = () => {
+    var now_utc = Date.now()
+    var timeOff = new Date().getTimezoneOffset()*60000;
+    var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+    document.getElementById("date").setAttribute("min", today);
+  }
   
   return (
     <div className="bg-white overflow-auto flex flex-col justify-center items-center h-full">
@@ -72,6 +94,7 @@ const Post = () => {
               id="preview-image" src={img} alt="preview" />
             <input
               type='file'
+              required
               id="avatar"
               name='avatar'
               accept='image/png, image/jpeg'
@@ -85,7 +108,7 @@ const Post = () => {
               <div className="text-[0.95rem] font-medium my-2">
                 <div className="my-2 list-disc text-[0.95rem] flex items-center">
                   <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='name'>물품명 : </label></h3>
-                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="text" name='name' id='name' value={name} onChange={(e) => setName(e.target.value)} placeholder='ex ) 칠성사이다' />
+                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="text" name='name' id='name' value={name} required onChange={(e) => setName(e.target.value)} placeholder='ex ) 칠성사이다' />
                 </div>
                 <div className="my-2 list-disc text-[0.95rem] flex items-center">
                   <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='amount'>용량 : </label></h3>
@@ -93,7 +116,7 @@ const Post = () => {
                 </div>
                 <div className="my-2 list-disc text-[0.95rem] flex items-center">
                 <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='price'>개당 가격 : </label></h3>
-                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="number" name='price' id='price' value={price} onChange={(e) => setPrice(e.target.value)}  placeholder='ex ) 600' />
+                  <input className="border p-1 mx-2 w-64 rounded px-2 " type="number" name='price' id='price' value={price} required onChange={(e) => setPrice(e.target.value)}  placeholder='ex ) 600' />
                 </div>
                 <div className="my-2 list-disc text-[0.95rem] flex items-start">
                 <h3 className="text-[0.95rem] font-medium text-gray-600 w-20"><label htmlFor='text'>상세내용 : </label></h3>
@@ -104,16 +127,16 @@ const Post = () => {
                 <div className="my-2 lg:my-2">
                   <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
                   <div className="mt-3 pl-4 list-disc text-[0.95rem] space-y-1">
-                    <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">최소수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="targetCount" id="targetCount" value={targetCount} onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
-                    <ul className="text-sm opacity-50">※목표하는 수량이 없다면 0으로 게시해주세요.</ul>
-                    <ul className="flex items-center"><p className="w-20" htmlFor="maxCount">마감수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="maxCount" id="maxCount" value={maxCount} onChange={(e) => setMaxCount(e.target.value)} placeholder='ex ) 30' />개</ul>
-                    <ul className="flex items-center"><p className="w-20" htmlFor="date">마감일 : </p><input className="border p-0.5 mx-2 w-40 rounded" type='date' name="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} /> 까지</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">최소수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="0" name="targetCount" id="targetCount" value={targetCount} required onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
+                    <ul className="text-sm opacity-50">※최소수량 수량이 없다면 0으로 게시해주세요.</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="maxCount">마감수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="maxCount" id="maxCount" value={maxCount} required onChange={(e) => setMaxCount(e.target.value)} placeholder='ex ) 30' />개</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="date">마감일 : </p><input className="border p-0.5 mx-2 w-40 rounded" type='date' name="date" id="date" value={date} required onChange={(e) => { setDate(e.target.value); }} /> 까지</ul>
                   </div>
                 </div>
                 <div className="my-2 lg:my-0 lg:py-2">
                   <h3 className="text-sm font-medium text-gray-500"><label htmlFor='link'>상세링크</label></h3>
                   <div className="mt-3 pl-8 pr-5 space-y-1 text-[0.95rem] text-gray-600">
-                    <input className="border p-1 w-full rounded" type="text" name='link' id='link' value={link} onChange={(e) => setLink(e.target.value)}  placeholder='ex ) https://gonggoo.gbsw.hs.kr' />
+                    <input className="border p-1 w-full rounded" type="text" name='link' id='link' value={link} required onChange={(e) => setLink(e.target.value)}  placeholder='ex ) https://gonggoo.gbsw.hs.kr' />
                   </div>
                 </div>
               </div>
