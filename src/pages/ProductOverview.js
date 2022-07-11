@@ -28,9 +28,11 @@ const ProductOverview = () => {
     }
     e.preventDefault();
     console.log("삭제 중..")
-    axios.delete(`/api/product/${id}`, {}, { withCredentials : true })
-      .then((res) => {console.log(res)});
-    window.location.href = "/";
+    axios.delete(`/api/product/${id}`, { withCredentials : true })
+      .then((res) => {
+        console.log(res)
+        window.location.href = "/";
+      })
   }
 
   const loadData = async () => {
@@ -64,15 +66,15 @@ const ProductOverview = () => {
   }
 
   const onClick = e => {
-    if(token) {
-      if(!value) {
-        if(window.confirm("취소하시겠습니까?") === false) {
+    if (token) {
+      if (!value) {
+        if (window.confirm("취소하시겠습니까?") === false) {
           return false;
         }
         e.preventDefault();
         setValue('');
       } else {
-        if(window.confirm("신청하시겠습니까?") === false) {
+        if (window.confirm("신청하시겠습니까?") === false) {
           return false;
         }
         e.preventDefault();

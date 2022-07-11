@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +20,7 @@ const ProductList = () => {
 
   const loadData = async () => {
     const result =  await axios.get("/api/product", {withCredentials: true})
-    if(result.data) {
+    if (result.data.success) {
       setSuccess(true);
     } 
     console.log(result.data)

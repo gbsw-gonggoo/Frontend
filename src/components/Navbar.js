@@ -3,14 +3,8 @@ import { Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { faHouse, faPlus } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-// import { useCookies } from 'react-cookie';
 
-const navigation = [
-  { name: "home", icon: faHouse, to: '/', current: true },
-  { name: "post", icon: faPlus, to: '/post', current: true },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')

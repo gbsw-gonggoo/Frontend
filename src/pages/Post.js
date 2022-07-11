@@ -1,54 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import axios from "axios"
 
 const Post = () => {
-  const [name, setName] = useState('');
-  const [amount, setAmount] = useState('');
-  const [price, setPrice] = useState('');
-  const [text, setText] = useState('');
-  const [targetCount, setTargetCount] = useState('');
-  const [maxCount, setMaxCount] = useState('');
-  const [date, setDate] = useState('');
-  const [link, setLink] = useState('');
-  const [img, setImg] = useState("https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image");
-  const [imgFile, setImgFile] = useState([]);
+  const [name, setName] = useState('')
+  const [amount, setAmount] = useState('')
+  const [price, setPrice] = useState('')
+  const [text, setText] = useState('')
+  const [targetCount, setTargetCount] = useState('')
+  const [maxCount, setMaxCount] = useState('')
+  const [date, setDate] = useState('')
+  const [link, setLink] = useState('')
+  const [img, setImg] = useState("https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image")
+  const [imgFile, setImgFile] = useState([])
   const [token, setToken] = useState(localStorage.getItem("token"))
 
   useEffect(() => {
-    checkDate();
+    checkDate()
   })
 
-  function submitImgFile(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-    axios.post("/api/product/img", formData, { withCredentials: true }).then(res => console.log(res));
-    console.log(file);
-    console.log("사진 전송!");
+  const submitImgFile = async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const res = await axios.post("/api/product/img", formData, { withCredentials: true })
+    console.log(file)
+    console.log("사진 전송!")
+    console.log(res)
+    return res.data.url
   }
 
   function readImage(input) {
-    const file = input.files[0];
+    const file = input.files[0]
     if(input.files && file) {
       const reader = new FileReader()
       reader.onload = e => {
-        setImg(e.target.result);
+        setImg(e.target.result)
       }
-      reader.readAsDataURL(file);
-      setImgFile(file);
-      console.log(input);
+      reader.readAsDataURL(file)
+      setImgFile(file)
+      console.log(input)
     }
-  };
+  }
   
   const submitHandler = async (e) => {
-    e.preventDefault();
-    if(!token) {
-      alert("로그인 후 이용해주세요");
+    e.preventDefault()
+    if (!token) {
+      alert("로그인 후 이용해주세요")
       window.location.href = "/login"
-    } 
+    }
     else {
-      if(window.confirm("등록하시겠습니까?") === false) {
-        return false;
+      if (window.confirm("등록하시겠습니까?") === false) {
+        return false
       }
+
+      const url = await submitImgFile(imgFile)
 
       let body = {
         name: name,
@@ -59,22 +63,20 @@ const Post = () => {
         maxCount: maxCount,
         date: date,
         link: link,
-      };
+        url: url,
+      }
 
-      axios.post("/api/product", body, { withCredentials : true })
-        .then((res) => {console.log(res)});
-  
-      submitImgFile(imgFile);
-      
-      // window.location.href = "/"
-    };
+      const res = await axios.post("/api/product", body, { withCredentials : true})
+      console.log(res)
+      window.location.href = "/"
+    }
   }
 
   const checkDate = () => {
     var now_utc = Date.now()
-    var timeOff = new Date().getTimezoneOffset()*60000;
-    var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
-    document.getElementById("date").setAttribute("min", today);
+    var timeOff = new Date().getTimezoneOffset()*60000
+    var today = new Date(now_utc-timeOff).toISOString().split("T")[0]
+    document.getElementById("date").setAttribute("min", today)
   }
   
   return (
@@ -123,7 +125,7 @@ const Post = () => {
                     <ul className="flex items-center"><p className="w-20" htmlFor="targetCount">*최소수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="0" name="targetCount" id="targetCount" value={targetCount} required onChange={(e) => setTargetCount(e.target.value)} placeholder='ex ) 10' />개</ul>
                     <ul className="text-sm opacity-50">※최소수량 수량이 없다면 0으로 게시해주세요.</ul>
                     <ul className="flex items-center"><p className="w-20" htmlFor="maxCount">*마감수량 : </p><input className="border p-1 mx-2 w-40 rounded" type='number' min="1" name="maxCount" id="maxCount" value={maxCount} required onChange={(e) => setMaxCount(e.target.value)} placeholder='ex ) 30' />개</ul>
-                    <ul className="flex items-center"><p className="w-20" htmlFor="date">*마감일 : </p><input className="border p-0.5 mx-2 w-40 rounded" type='date' name="date" id="date" value={date} required onChange={(e) => { setDate(e.target.value); }} /> 까지</ul>
+                    <ul className="flex items-center"><p className="w-20" htmlFor="date">*마감일 : </p><input className="border p-0.5 mx-2 w-40 rounded" type='date' name="date" id="date" value={date} required onChange={(e) => { setDate(e.target.value) }} /> 까지</ul>
                   </div>
                 </div>
                 <div className="my-2 lg:my-0 lg:py-2">
@@ -150,4 +152,4 @@ const Post = () => {
 }
 
 
-export default Post;
+export default Post

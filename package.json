@@ -55,5 +55,5 @@
   "main": "postcss.config.js",
   "author": "",
   "license": "ISC",
-  "proxy": "https://gonggoo.gbsw.hs.kr"
+  "proxy": "http://172.16.1.42:8002"
 }
