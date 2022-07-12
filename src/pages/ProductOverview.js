@@ -225,7 +225,7 @@ const ProductOverview = () => {
                   </div>
                 </div>
                 <div className="my-3 mx-6 py-2 border-b">
-                  총: {product.count}개
+                  총: {product.Apply.amount}개
                 </div>
               </>:
               <div>신청자가 없습니다.</div>}
