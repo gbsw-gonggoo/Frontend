@@ -36,16 +36,14 @@ function MyPage() {
   }, [user])
 
   const loadData = async () => {
-    let result = await axios.get("/api/user", { withCredentials: true })
-    let product = await axios.get("/api/product", { withCredentials: true })
-    let product1 = await axios.get("/api/product", { withCredentials: true })
+    const result = await axios.get("/api/user", { withCredentials: true })
+    // let product = await axios.get("/api/product", { withCredentials: true })
+    // let product1 = await axios.get("/api/product", { withCredentials: true })
 
     if (result.data.success) {
       setUser(result.data.user)
-      if(product.data.success) setProducts(product.data.product)
-      if(product1.data.success) setProducts1(product1.data.product)
-      console.log(product)
-      console.log(product1)
+      setProducts1(result.data.userProduct)
+      setProducts(result.data.user.RegisteredProduct)
     } else {
       window.location.href = "/"
     }
@@ -80,7 +78,7 @@ function MyPage() {
       if(id==="profile-img") setSubmitImg(file);
       if(id==="profile-bg-img") submitImgFile("background", file);
     }
-  };
+  }
 
   function fixButtonHandler() {
     setFixButton(!fixButton);
@@ -136,8 +134,8 @@ function MyPage() {
   if(!token||!Object.keys(user).length) {
     return (
       <div className="bg-slate-50 w-full h-full fixed top-0 flex justify-center items-center">
-        <div class="loadingio-spinner-rolling-nujnwn5po0q">
-          <div class="ldio-6wvhm66o7gx"><div /></div>
+        <div className="loadingio-spinner-rolling-nujnwn5po0q">
+          <div className="ldio-6wvhm66o7gx"><div /></div>
         </div>
       </div>
     )
@@ -210,8 +208,8 @@ function MyPage() {
                   <div className="w-full">
                   <div className="font-semibold my-3 text-gray-500">이름 : <input type="text" value={user.name} disabled /></div>
                   <div className="font-semibold my-3 text-gray-500">학번 : <input type="text" value={user.number} disabled /></div>
-                  <div className="font-semibold my-3 text-gray-500">닉네임 : <input type="text" placeholder="닉네임을 입력하세요" className="text-black" onChange={(e) => setNickname(e.target.value)} value={nickname} /></div>
-                  <div className="font-semibold my-3 text-gray-500">이메일 : <input type="email" placeholder="이메일을 입력하세요" className="text-black" onChange={(e) => setEmail(e.target.value)} value={email} /></div>
+                  <div className="font-semibold my-3 text-gray-500">닉네임 : <input type="text" placeholder="닉네임을 입력하세요" className="text-black border-2" onChange={(e) => setNickname(e.target.value)} value={nickname} /></div>
+                  <div className="font-semibold my-3 text-gray-500">이메일 : <input type="email" placeholder="이메일을 입력하세요" className="text-black border-2" onChange={(e) => setEmail(e.target.value)} value={email} /></div>
                 </div>:
                 <div className="w-full">
                   <div className="font-semibold my-3 text-gray-500">이름 : <span className="font-medium text-black">{user.name}</span></div>
@@ -231,8 +229,8 @@ function MyPage() {
                     <div>
                       신청한 공동구매가 없습니다.
                     </div>:
-                    products.map(product => (
-                    <Link to={`/product/${product.id}`} key={product.id} state={{ product: product }}>
+                    products.map((product, i) => (
+                    <Link to={`/products/${product.id}`} key={product.id} state={{ product: product }}>
                       <div className="flex justify-between py-5 lg:py-4 px-4 items-center hover:bg-slate-50	">
                         <div className="flex items-center">
                           <img
@@ -245,7 +243,7 @@ function MyPage() {
                           </div>
                         </div>
                         <div className="font-semibold text-sm text-sky-500">
-                          <p>{product.count}개</p>
+                          <p>{products.at(i).Apply.amount}개</p>
                         </div>
                       </div>
                     </Link>
@@ -264,7 +262,7 @@ function MyPage() {
                     <div>
                       <div className="my-2 py-2 lg:flex">
                         {products1.map((product) => (
-                          <Link to={`/product/${product.id}`} key={product.id}>
+                          <Link to={`/products/${product.id}`} key={product.id}>
                             <div className="group w-60 border rounded-md bg-white mx-2">
                               <div className="m hover-group p-3 border-b rounded-t-md overflow-hidden h-52 aspect-none">
                                 <div className="hover-text list-disc font-semibold text-base text-gray-700">
