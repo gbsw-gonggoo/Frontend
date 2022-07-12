@@ -245,7 +245,7 @@ function MyPage() {
                           </div>
                         </div>
                         <div className="font-semibold text-sm text-sky-500">
-                          <p>{product.value}개</p>
+                          <p>{product.count}개</p>
                         </div>
                       </div>
                     </Link>

@@ -184,7 +184,7 @@ const ProductOverview = () => {
                 </div>
                 <form className="algin-bottom">
                   <div className="lg:py-2 py-6 ml-3 float-left">
-                    <input className="border p-1 mr-2 w-20 rounded" min="1" type="number" value={value} onChange={onChange} />개
+                    <input className="border p-1 mr-2 w-20 rounded" min="0" type="number" value={value} onChange={onChange} />개
                   </div>
                   <button
                     type="submit"
@@ -205,11 +205,11 @@ const ProductOverview = () => {
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
             </div>
             <div className="h-[15rem] lg:h-[23.2rem]">
-              {product.user?
+              {product.RegisteredUser?
               <>
-                <div className="overflow-y-scroll  w-full">
+                <div className="overflow-y-scroll  w-full h-full p-5">
                   <div className="flex flex-col items-center">
-                    {product.user.map((user, i) => (
+                    {product.RegisteredUser.map((user, i) => (
                       <div key={i} className="p-2 border-b flex h-auto ">
                         <div className="pr-2">
                           {i+1}.
@@ -218,13 +218,13 @@ const ProductOverview = () => {
                           {user.number + " " + user.name}:
                         </div>
                         <div>
-                          {user.count}개
+                          {user.Apply.amount}개
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="self-end my-3 mr-10 py-2 border-b">
+                <div className="my-3 mx-6 py-2 border-b">
                   총: {product.count}개
                 </div>
               </>:
