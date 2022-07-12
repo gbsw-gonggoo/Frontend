@@ -17,16 +17,11 @@ const Navbar = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   
   const Logout = async () => {
-    const response = await axios.get("/api/auth/logout", { withCredentials: true })
-    console.log(response)
-    
-    if (response.data.success) {
-      console.log('로그아웃 성공')
-      localStorage.removeItem("token")
-      window.location.href = "/";
-    } else {
-      console.log('로그인 안되어있음')
-    }
+    axios.get("/api/auth/logout", { withCredentials: true })
+      .then((res) => {
+        console.log(res)
+        window.location.href = "/";
+      })
   }
 
   useEffect(() => {
@@ -71,6 +66,7 @@ const Navbar = () => {
                 <img
                   className="block h-8 w-auto"
                   src={`${process.env.PUBLIC_URL}/logo.ico`}
+                  alt="logo"
                 />
               </Link>
             </div>
@@ -80,7 +76,7 @@ const Navbar = () => {
                   <Link
                     to='/post'
                     className={classNames(
-                      false ? 'text-gray-700' : 'text-gray-400 hover:text-gray-700',
+                      'text-gray-400 hover:text-gray-700',
                       'px-3 py-2 text-md font-semibold'
                     )}>
                     올리기
@@ -137,7 +133,7 @@ const Navbar = () => {
                     <Link
                     to='/signin'
                     className={classNames(
-                      false ? 'text-gray-700' : 'text-gray-400 hover:text-gray-700',
+                      'text-gray-400 hover:text-gray-700',
                       'px-3 py-2 text-md font-semibold'
                     )}>
                       로그인
@@ -153,20 +149,20 @@ const Navbar = () => {
             <Link
                 to="/"
                 className={classNames(
-                  true ? 'text-gray-700' : 'text-gray-300 hover:bg-gray-300 hover:text-gray-700',
+                  'text-gray-700',
                   'block px-3 py-2 rounded-md text-base font-medium'
                 )}
-                aria-current={true? 'page' : undefined}
+                aria-current={'page'}
               >
                 홈
             </Link>
             <Link
                 to="/post"
                 className={classNames(
-                  true ? 'text-gray-700' : 'text-gray-300 hover:bg-gray-300 hover:text-gray-700',
+                  'text-gray-700',
                   'block px-3 py-2 rounded-md text-base font-medium'
                 )}
-                aria-current={true? 'page' : undefined}
+                aria-current={'page'}
               >
                 올리기
             </Link>
