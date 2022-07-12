@@ -11,6 +11,7 @@ const ProductOverview = () => {
   const {id} = useParams();
   const [success, setSuccess] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"))
+  const [applyCount, setApplyCount] = useState(0)
 
   const format = (date) => {
     const day = new Date(date);
@@ -43,6 +44,12 @@ const ProductOverview = () => {
       setSuccess(true);
       console.log(result.data)
       setProduct(result.data.product)
+
+      let sum = 0
+      result.data.product.RegisteredUser.forEach(user => sum += user.Apply.amount)
+      console.log(sum)
+      setApplyCount(sum)
+
     } else {
       if(result.data.success) setSuccess(true);
       window.location.href = "/login"
@@ -90,8 +97,8 @@ const ProductOverview = () => {
   if (!success) {
     return (
       <div className="bg-white w-full h-full fixed top-0 flex justify-center items-center">
-        <div class="loadingio-spinner-rolling-nujnwn5po0q">
-          <div class="ldio-6wvhm66o7gx"><div /></div>
+        <div className="loadingio-spinner-rolling-nujnwn5po0q">
+          <div className="ldio-6wvhm66o7gx"><div /></div>
         </div>
       </div>
     )
@@ -218,14 +225,14 @@ const ProductOverview = () => {
                           {user.number + " " + user.name}:
                         </div>
                         <div>
-                          {user.Apply.amount}개
+                          {product.RegisteredUser.at(i).Apply.amount}개
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="my-3 mx-6 py-2 border-b">
-                  총: {product.Apply.amount}개
+                  총: {applyCount}개
                 </div>
               </>:
               <div>신청자가 없습니다.</div>}
