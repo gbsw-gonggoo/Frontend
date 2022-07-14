@@ -4,13 +4,36 @@ import axios from "axios";
 
 const ProductOverview = () => {
   const [product, setProduct] = useState({})
-  const [value, setValue] = useState(product?.value?product.count:1)
+  const [count, setCount] = useState(0)
+  const [value, setValue] = useState(1)
   const [user, setUser] = useState({name : null,});
   const {id} = useParams();
   const [success, setSuccess] = useState(false);
   const [userSuccess, setUserSuccess] = useState(false);
   // const [token, setToken] = useState(localStorage.getItem("token"))
   const [applyCount, setApplyCount] = useState(0)
+
+  // function filterByID(item) {
+  //   if (isNumber(item.id) && item.id !== 0) {
+  //     return true;
+  //   }
+  //   invalidEntries++;
+  //   return false;
+  // }
+
+  useEffect(() => {
+    Count();
+  }, [user])
+
+  const Count = () => {
+    if(user.name&&product.id) {
+      const data = user.RegisteredProduct.filter(v => v.id === product.id);
+      if(data.length) {
+        setCount(data[0].Apply.amount)
+        setValue(data[0].Apply.amount)
+      }
+    }
+  }
 
   const format = (date) => {
     const day = new Date(date);
@@ -173,7 +196,7 @@ const ProductOverview = () => {
                   <div className="my-4 lg:my-8">
                     <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
                     <div className="mt-3 pl-4 list-disc text-sm space-y-1">
-                      <ul>{applyCount} / {product.maxCount} 개</ul>
+                      <ul>{product.count} / {product.maxCount} 개</ul>
                       {product.targetCount!==0?<ul>최소수량 : {product.targetCount}개</ul>:null}
                       <ul>{format(product.date)} 까지</ul>
                     </div>
@@ -196,7 +219,7 @@ const ProductOverview = () => {
                     className={"w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center " + 
                     "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none float-right mb-6 lg:m-0 "
                     + (product.author===user.name?"lg:w-36" : "lg:w-48")}>
-                    {product.count!==0?"수정하기":"신청하기"}
+                    {count!==0?"수정하기":"신청하기"}
                   </button>
                 </form>
               </div>

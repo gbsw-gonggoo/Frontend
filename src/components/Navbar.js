@@ -20,6 +20,7 @@ const Navbar = () => {
     axios.get("/api/auth/logout", { withCredentials: true })
       .then((res) => {
         console.log(res)
+        localStorage.removeItem("token");
         window.location.href = "/";
       })
   }
