@@ -283,16 +283,18 @@ function MyPage() {
                       </div>
                       <div className="block lg:hidden">
                         {products1.map(product => (
-                          <div className="flex items-center py-5 px-4" key={product.id}>
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="w-14 h-14 rounded-full mr-4" />
-                            <div>
-                              <div className="font-semibold">{ product.name }</div>
-                              <div className="text-slate-500 text-sm">개당 {product.price}원</div>
+                          <Link to={`/product/${product.id}`} key={product.id}>
+                            <div className="flex items-center py-5 px-4">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-14 h-14 rounded-full mr-4" />
+                              <div>
+                                <div className="font-semibold">{ product.name }</div>
+                                <div className="text-slate-500 text-sm">개당 {product.price}원</div>
+                              </div>
                             </div>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
