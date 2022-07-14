@@ -251,7 +251,7 @@ function MyPage() {
                       게시한 공동구매가 없습니다.
                     </div>:
                     <div>
-                      <div className="my-2 py-2 lg:flex">
+                      <div className="my-2 py-2 lg:flex hidden">
                         {products1.map((product) => (
                           <Link to={`/products/${product.id}`} key={product.id}>
                             <div className="group w-60 border rounded-md bg-white mx-2">
