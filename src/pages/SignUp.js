@@ -34,12 +34,11 @@ const SignUp = () => {
     axios
       .post("/api/auth/signup", body, { withCredentials: true })
       .then((res) => {
-        if(!res.data.success) {
-          alert(res.data.message)
-        } else {
+        if(res.data.success) {
           console.log(res.data)
-          window.location.href = "/"
+          window.location.href = "/login"
         }
+        alert(res.data.message)
       });
   
   };

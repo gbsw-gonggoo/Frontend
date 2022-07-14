@@ -49,6 +49,7 @@ const Post = () => {
     }
     else {
       if (window.confirm("등록하시겠습니까?") === false) {
+        alert('취소되었습니다.')
         return false
       }
 
@@ -66,8 +67,9 @@ const Post = () => {
         url: url,
       }
 
-      const res = await axios.post("/api/product", body, { withCredentials : true})
-      console.log(res)
+      await axios.post("/api/product", body, { withCredentials : true})
+        .then((res) => {alert(res.data.message);})
+      
       window.location.href = "/"
     }
   }
@@ -85,7 +87,7 @@ const Post = () => {
         <form onSubmit={(e) => submitHandler(e)} className="sm:max-w-2xl lg:overflow-auto h-full lg:h-auto mx-auto sm:px-6 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md">
           <div className="aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y sm:border sm:mt-5 lg:border overflow-hidden h-90 lg:h-[34rem] lg:col-span-6">
             <img 
-              className="w-full lg:h-[28rem] object-center object-cover lg:rounded-sm mb-4 sm:border"
+              className="w-full h-[23rem] lg:h-[28rem] object-center object-cover lg:rounded-sm mb-4 sm:border"
               id="preview-image" src={img} alt="preview" />
             <input
               type='file'

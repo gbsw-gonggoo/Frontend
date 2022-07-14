@@ -37,9 +37,6 @@ function MyPage() {
 
   const loadData = async () => {
     const result = await axios.get("/api/user", { withCredentials: true })
-    // let product = await axios.get("/api/product", { withCredentials: true })
-    // let product1 = await axios.get("/api/product", { withCredentials: true })
-
     if (result.data.success) {
       setUser(result.data.user)
       setProducts1(result.data.userProduct)
@@ -57,9 +54,12 @@ function MyPage() {
   function submitImgFile(path, file) {
     const formData = new FormData();
     formData.append('file', file);
-    axios.post(`/api/user/${path}`, formData, {withCredentials: true}).then(res => console.log(res));
-    console.log(file);
-    console.log("사진 전송!");
+    axios.post(`/api/user/${path}`, formData, {withCredentials: true})
+    .then(res => {
+      alert(res.data.message)
+    })
+    .catch(e => console.log(e));
+    
   }
 
   function readImage(input, id) {
@@ -112,17 +112,8 @@ function MyPage() {
 
     axios.post("/api/user", body)
       .then((res) => {console.log(res)});
+    window.location.reload();
   };
-
-  // if (!products.length||!products1.length) {
-  //   return (
-  //     <div className="bg-slate-50 w-full h-full fixed top-0 flex justify-center items-center">
-  //       <div class="loadingio-spinner-rolling-nujnwn5po0q">
-  //         <div class="ldio-6wvhm66o7gx"><div /></div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
   useEffect(() => {
     if(!token) {
@@ -206,16 +197,16 @@ function MyPage() {
                 </div>
                 {fixButton?
                   <div className="w-full">
-                  <div className="font-semibold my-3 text-gray-500">이름 : <input type="text" value={user.name} disabled /></div>
-                  <div className="font-semibold my-3 text-gray-500">학번 : <input type="text" value={user.number} disabled /></div>
-                  <div className="font-semibold my-3 text-gray-500">닉네임 : <input type="text" placeholder="닉네임을 입력하세요" className="text-black border-2" onChange={(e) => setNickname(e.target.value)} value={nickname} /></div>
-                  <div className="font-semibold my-3 text-gray-500">이메일 : <input type="email" placeholder="이메일을 입력하세요" className="text-black border-2" onChange={(e) => setEmail(e.target.value)} value={email} /></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">이름 : </span><input type="text" className="px-2 py-1" value={user.name} disabled /></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">학번 : </span><input type="text" className="px-2 py-1" value={user.number} disabled /></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">닉네임 : </span><input type="text" placeholder="닉네임을 입력하세요" className="text-black border-b-2 px-2 py-1 focus:outline-none focus:border-b-black w-64" onChange={(e) => setNickname(e.target.value)} value={nickname} /></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">이메일 : </span><input type="email" placeholder="이메일을 입력하세요" className="text-black border-b-2 px-2 py-1 focus:outline-none focus:border-b-black w-64" onChange={(e) => setEmail(e.target.value)} value={email} /></div>
                 </div>:
                 <div className="w-full">
-                  <div className="font-semibold my-3 text-gray-500">이름 : <span className="font-medium text-black">{user.name}</span></div>
-                  <div className="font-semibold my-3 text-gray-500">학번 : <span className="font-normal text-black">{user.number}</span></div>
-                  <div className="font-semibold my-3 text-gray-500">닉네임 : <span className="font-normal text-black">{nickname}</span></div>
-                  <div className="font-semibold my-3 text-gray-500">이메일 : <span className="font-normal text-black">{email}</span></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">이름 : </span><span className="font-medium text-black px-2 py-1">{user.name}</span></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">학번 : </span><span className="font-normal text-black px-2 py-1">{user.number}</span></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">닉네임 : </span><span className="font-normal text-black px-2 border-b-2 border-white py-1">{nickname}</span></div>
+                  <div className="font-semibold my-3 text-gray-500 flex flex-row items-center"><span className="w-16">이메일 : </span><span className="font-normal text-black px-2 border-b-2 border-white py-1">{email}</span></div>
                 </div>
                 }
                 
@@ -230,7 +221,7 @@ function MyPage() {
                       신청한 공동구매가 없습니다.
                     </div>:
                     products.map((product, i) => (
-                    <Link to={`/products/${product.id}`} key={product.id} state={{ product: product }}>
+                    <Link to={`/product/${product.id}`} key={product.id} state={{ product: product }}>
                       <div className="flex justify-between py-5 lg:py-4 px-4 items-center hover:bg-slate-50	">
                         <div className="flex items-center">
                           <img

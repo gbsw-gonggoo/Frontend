@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
-// const user1 = '김성현';
-
 const ProductOverview = () => {
   const [product, setProduct] = useState({})
-  const [value, setValue] = useState(product?.value?product.value:1)
-  const [user, setUser] = useState('');
+  const [value, setValue] = useState(product?.value?product.count:1)
+  const [user, setUser] = useState({name : null,});
   const {id} = useParams();
   const [success, setSuccess] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [userSuccess, setUserSuccess] = useState(false);
+  // const [token, setToken] = useState(localStorage.getItem("token"))
   const [applyCount, setApplyCount] = useState(0)
 
   const format = (date) => {
@@ -24,14 +23,14 @@ const ProductOverview = () => {
 
   const deletePost = (e) => {
     if(window.confirm("삭제하시겠습니까?") === false) {
-      console.log("취소!")
+      alert('취소되었습니다.');
       return false;
     }
     e.preventDefault();
-    console.log("삭제 중..")
     axios.delete(`/api/product/${id}`, { withCredentials : true })
       .then((res) => {
-        console.log(res)
+        console.log(res);
+        alert(res.data.message);
         window.location.href = "/";
       })
   }
@@ -42,30 +41,26 @@ const ProductOverview = () => {
 
     if (result.data.success) {
       setSuccess(true);
-      console.log(result.data)
       setProduct(result.data.product)
+      console.log(result.data)
 
       let sum = 0
       result.data.product.RegisteredUser.forEach(user => sum += user.Apply.amount)
-      console.log(sum)
       setApplyCount(sum)
-
     } else {
       if(result.data.success) setSuccess(true);
-      window.location.href = "/login"
+      window.location.replace("/login");
     }
-
     if(user1.data.success) {
-      setUser(user1.data.user.name);
-      console.log(user1.data);
+      setUser(user1.data.user);
+      setUserSuccess(user1.data.success);
     }
+    console.log(user1.data);
   }
 
   const submitHandler = (e) => {
-    e.preventDefault();
-
     axios.post(`/api/apply/${id}/${value}`, {}, { withCredentials : true })
-      .then((res) => {console.log(res)});
+      .then((res) => {alert(res.data.message);});
   }
 
   const onChange = e => {
@@ -73,24 +68,26 @@ const ProductOverview = () => {
   }
 
   const onClick = e => {
-    if (token) {
+    if (userSuccess) {
       if (!value) {
         if (window.confirm("취소하시겠습니까?") === false) {
           return false;
         }
-        e.preventDefault();
         setValue('');
+        alert('취소되었습니다.');
       } else {
         if (window.confirm("신청하시겠습니까?") === false) {
           return false;
         }
-        e.preventDefault();
         setValue(value);
       }
+      e.preventDefault();
       submitHandler(e);
+      window.location.reload();
     } else {
       alert('로그인 후 이용해주세요');
-      window.location.href="/login";
+      window.location.replace('/login');
+      e.preventDefault();
     }
   }
 
@@ -134,7 +131,7 @@ const ProductOverview = () => {
               </li>
             </ol>
           </nav>
-         {user===product.author?
+         {user.name===product.author?
           <div className="lg:block sm:block hidden mr-8 ">
             <button
               type="submit"
@@ -148,7 +145,7 @@ const ProductOverview = () => {
       <div className="flex flex-col justify-center items-center lg:h-full">
         <div className="lg:h-auto pt-2 w-full sm:px-6 lg:max-w-[68rem] lg:p-8 lg:grid lg:grid-cols-11 lg:gap-x-8 lg:border rounded-md lg:overflow-auto">
           {/* Image gallery */}
-          <div className={"my-2 aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author===user?"lg:col-span-4" : "lg:col-span-6")}>
+        <div className={"my-2 aspect-w-3 aspect-h-4 lg:rounded-md lg:p-6 p-4 border-y lg:border h-96 lg:h-[34rem] " + (product.author===user.name?"lg:col-span-4" : "lg:col-span-6")}>
             <img
               // src={process.env.PUBLIC_URL + product.image.src}
               src = {product.image}
@@ -158,7 +155,7 @@ const ProductOverview = () => {
           </div>
 
           {/* Product info */}
-          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-2 lg:px-8 w-full " + (product.author===user?"lg:col-span-4" : "lg:col-span-5")}>
+          <div className={"h-auto flex flex-col justify-start lg:justify-center auto-cols-max p-4 lg:py-2 lg:px-8 w-full " + (product.author===user.name?"lg:col-span-4" : "lg:col-span-5")}>
             <div className="pl-1">
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">{product.name+(product.amount?", "+product.amount:"")}</h1>
             </div>
@@ -176,7 +173,7 @@ const ProductOverview = () => {
                   <div className="my-4 lg:my-8">
                     <h3 className="text-sm font-medium text-gray-500">안내사항</h3>
                     <div className="mt-3 pl-4 list-disc text-sm space-y-1">
-                      <ul>{product.count} / {product.maxCount} 개</ul>
+                      <ul>{applyCount} / {product.maxCount} 개</ul>
                       {product.targetCount!==0?<ul>최소수량 : {product.targetCount}개</ul>:null}
                       <ul>{format(product.date)} 까지</ul>
                     </div>
@@ -198,7 +195,7 @@ const ProductOverview = () => {
                     onClick={onClick}
                     className={"w-full  bg-indigo-600 border border-transparent rounded-md py-3 flex items-center justify-center " + 
                     "text-base font-medium text-white hover:bg-indigo-700 focus:outline-none float-right mb-6 lg:m-0 "
-                    + (product.author===user?"lg:w-36" : "lg:w-48")}>
+                    + (product.author===user.name?"lg:w-36" : "lg:w-48")}>
                     {product.count!==0?"수정하기":"신청하기"}
                   </button>
                 </form>
@@ -206,16 +203,16 @@ const ProductOverview = () => {
             </div>
             <span className="ml-3 mt-3 text-sm opacity-50">※취소를 원할 경우 갯수를 0개로 수정 부탁드립니다.</span>
           </div>
-          {product.author===user ? (
-          <div className={"py-2 px-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author===user?"lg:col-span-3":"hidden")}>
+          {product.author===user.name ? (
+          <div className={"py-2 px-3 flex flex-col items-center w-full lg:h-[34rem] " + (product.author===user.name?"lg:col-span-3":"hidden")}>
             <div className="flex justify-center mb-3 h-10 lg:h-8">
               <h1 className="text-lg font-semibold tracking-tight text-gray-800 sm:text-2xl">신청자</h1>
             </div>
             <div className="h-[15rem] lg:h-[23.2rem]">
-              {product.RegisteredUser?
+              {applyCount ?
               <>
                 <div className="overflow-y-scroll  w-full h-full p-5">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center min-h-[14rem]">
                     {product.RegisteredUser.map((user, i) => (
                       <div key={i} className="p-2 border-b flex h-auto ">
                         <div className="pr-2">

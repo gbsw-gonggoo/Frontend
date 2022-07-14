@@ -28,7 +28,7 @@ const SignIn = () => {
         }
         else {
           // widow.location.href = "/";
-          alert("로그인을 실패했습니다.")
+          alert("로그인에 실패하였습니다.")
         }
       }
     );

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
@@ -52,7 +52,7 @@ const ProductList = () => {
             공동구매글이 없습니다.
           </div>:
           products.map((product) => (
-            <Link to={`/products/${product.id}`} key={product.id} state={{ product: product }}>
+            <Link to={`/product/${product.id}`} key={product.id} state={{ product: product }}>
               <div className="group relative border rounded-md bg-white">
                 <div className="m hover-group w-full p-3 border-b rounded-t-md overflow-hidden h-48 lg:h-80 lg:aspect-none">
                   <div className="hover-text list-disc font-semibold text-base text-gray-700">

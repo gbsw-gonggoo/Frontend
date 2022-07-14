@@ -52,6 +52,7 @@ const Navbar = () => {
           <div className="sticky flex items-center justify-between h-16">
             <div className="inset-y-0 left-0 flex items-center sm:hidden">
               {/* Mobile menu button*/}
+              {token?(
               <Disclosure.Button className={"inline-flex items-center justify-center p-2 rounded-md focus:outline-none " + (isOpen ? "text-gray-800" : "text-gray-400")}>
                 {isOpen ? (
                   <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -59,9 +60,10 @@ const Navbar = () => {
                   <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                 )}
               </Disclosure.Button>
+              ):''}
             </div>
             
-            <div className="flex items-center ">
+            <div className={"flex items-center sm:w-auto lg:w-auto w-full "+(token?"justify-center":"justify-start ml-7")}>
               <Link to='/'>
                 <img
                   className="block h-8 w-auto"
@@ -73,6 +75,7 @@ const Navbar = () => {
             <div className="flex">
               <div className="hidden sm:block items-center pr-2">
                 <div className="flex space-x-4">
+                {token?(
                   <Link
                     to='/post'
                     className={classNames(
@@ -80,12 +83,13 @@ const Navbar = () => {
                       'px-3 py-2 text-md font-semibold'
                     )}>
                     올리기
-                  </Link>
+                  </Link>)
+                  :''}
                 </div>
               </div>
-              <div className="flex items-center pr-2 sm:static sm:inset-auto sm:pr-0">
+              <div className="flex items-center sm:static sm:inset-auto sm:pr-0">
                 {token?(
-                  <Menu as="div" className="ml-3 relative">
+                  <Menu as="div" className="ml-3 relative pr-2 ">
                     <div>
                       <Menu.Button className="overflow-hidden flex items-center justify-center h-8 w-8 text-sm rounded-full focus:outline-none">
                         <img
@@ -129,7 +133,7 @@ const Navbar = () => {
                     </Transition>
                   </Menu>
                 ):(
-                  <div>
+                  <div className="w-[4.5rem]  mr-3">
                     <Link
                     to='/signin'
                     className={classNames(

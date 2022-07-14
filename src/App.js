@@ -21,7 +21,7 @@ class App extends Component {
             <Route path="/post" element={<Post />}/>
             <Route path="/list" element={<ProductList />}/>
             <Route path="/mypage" element={<Mypage />}/>
-            <Route path="/products/:id" element={<ProductOverview />}/>
+            <Route path="/product/:id" element={<ProductOverview />}/>
           </Routes>
           </div>
         </div>
