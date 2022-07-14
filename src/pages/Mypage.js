@@ -14,7 +14,7 @@ function MyPage() {
   const [email, setEmail] = useState(user.email);
   const [img, setImg] = useState(`${process.env.PUBLIC_URL}/users/defaultProfileImg.png`);
   const [submitImg, setSubmitImg] = useState([]);
-  const [backgroundImg, setBackgroundImg] = useState(`${process.env.PUBLIC_URL}/users/cat.jpg`);
+  const [backgroundImg, setBackgroundImg] = useState(`https://dummyimage.com/600x400/eee/eee`);
   const [token, setToken] = useState(localStorage.getItem("token")) 
 
   const format = (date) => {
@@ -253,7 +253,7 @@ function MyPage() {
                     <div>
                       <div className="my-2 py-2 lg:flex hidden">
                         {products1.map((product) => (
-                          <Link to={`/products/${product.id}`} key={product.id}>
+                          <Link to={`/product/${product.id}`} key={product.id}>
                             <div className="group w-60 border rounded-md bg-white mx-2">
                               <div className="m hover-group p-3 border-b rounded-t-md overflow-hidden h-52 aspect-none">
                                 <div className="hover-text list-disc font-semibold text-base text-gray-700">
