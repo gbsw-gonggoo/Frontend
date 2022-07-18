@@ -13,7 +13,8 @@ const SignUp = () => {
 
   const navigation = useNavigate();
   function goBack ()  {
-    window.location.href = "/login"
+    navigation(-1);
+    setRequired(true);
   }
 
   const submitHandler = (e) => {
