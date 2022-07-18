@@ -81,9 +81,10 @@ const ProductOverview = () => {
     console.log(user1.data);
   }
 
-  const submitHandler = (e) => {
-    axios.post(`/api/apply/${id}/${value}`, {}, { withCredentials : true })
-      .then((res) => {alert(res.data.message);});
+  const submitHandler = async (e) => {
+    const res = await axios.post(`/api/apply/${id}/${value}`, {}, { withCredentials : true })
+    alert(res.data.message)
+    window.location.reload();
   }
 
   const onChange = e => {
@@ -106,7 +107,7 @@ const ProductOverview = () => {
       }
       e.preventDefault();
       submitHandler(e);
-      window.location.reload();
+
     } else {
       alert('로그인 후 이용해주세요');
       window.location.replace('/login');

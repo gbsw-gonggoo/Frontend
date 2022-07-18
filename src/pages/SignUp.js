@@ -13,8 +13,7 @@ const SignUp = () => {
 
   const navigation = useNavigate();
   function goBack ()  {
-    navigation(-1);
-    setRequired(true);
+    window.location.href = "/login"
   }
 
   const submitHandler = (e) => {
@@ -162,6 +161,7 @@ const SignUp = () => {
                 회원가입
               </button>
               <button
+                type="button"
                 onClick={() => goBack()}
                 className="my-2 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-600 border-indigo-600 hover:border-indigo-700  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >

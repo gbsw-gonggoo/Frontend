@@ -55,5 +55,5 @@
   "main": "postcss.config.js",
   "author": "",
   "license": "ISC",
-  "proxy": "http://172.16.1.42:8002"
+  "proxy": "http://0.0.0.0:8002"
 }
